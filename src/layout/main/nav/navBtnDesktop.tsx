@@ -1,20 +1,20 @@
 'use client';
 
 import type { NavBarItem } from '@/_types/_header';
-import LinkComponent from '@/components/linkComponent';
 import NavContainer from '@/layout/main/nav/navContainer';
 import { Button, Typography } from '@mui/material';
 import clsx from 'clsx';
+import Link from 'next/link';
 import { useState } from 'react';
 
 type NavButtonProps = {
   navItem: NavBarItem;
 };
 
-export default function NavButton({ navItem }: NavButtonProps) {
+export default function NavButtonDesktop({ navItem }: NavButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
-  // check null and length 
-  const hasChildren = (navItem.children?.length ?? 0)> 0;
+  // check null and length
+  const hasChildren = (navItem.children?.length ?? 0) > 0;
 
   const handleMouseEnter = () => {
     if (hasChildren) {
@@ -33,8 +33,8 @@ export default function NavButton({ navItem }: NavButtonProps) {
       onMouseLeave={handleMouseLeave}
     >
       <Button
-        component={LinkComponent}
-        href={navItem.path ?? '#'}
+        component={navItem.path ? Link: "div"}
+        href={navItem.path ? navItem.path : undefined}
         size="small"
         variant={hasChildren ? 'text' : 'contained'}
         className={clsx(
@@ -48,14 +48,13 @@ export default function NavButton({ navItem }: NavButtonProps) {
           !hasChildren &&
             'bg-primary-light text-text-primary hover:bg-primary-main hover:text-common-white',
         )}
-        
       >
         <Typography variant="body1">{navItem.faName}</Typography>
       </Button>
 
       {hasChildren && isOpen ? (
         <div className="absolute inset-x-0 top-full z-50 pt-3">
-          <NavContainer item={navItem} />
+          <NavContainer navItem={navItem} />
         </div>
       ) : null}
     </div>

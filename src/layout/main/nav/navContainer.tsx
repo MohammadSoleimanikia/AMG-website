@@ -12,12 +12,12 @@ import Link from 'next/link';
 import { API_BASE_URL } from '@/utils/config';
 
 type NavContainerProps = {
-  item: NavBarItem;
+  navItem: NavBarItem;
 };
 
-export default function NavContainer({ item }: NavContainerProps) {
+export default function NavContainer({ navItem }: NavContainerProps) {
   const [activeCategory, setActiveCategory] = useState<NavBarChildItem | null>(
-    item.children[0],
+    navItem.children[0],
   );
 
   return (
@@ -25,21 +25,27 @@ export default function NavContainer({ item }: NavContainerProps) {
       <div className="-mt-8 flex min-h-[420px] w-full overflow-hidden rounded-[24px] bg-background-default p-5 shadow-s0">
         {/* Level 2 */}
         <div className="flex w-[240px] flex-shrink-0 flex-col">
-          {item.children.map((category) => {
-            const isActive = activeCategory?.id === category.id;
+          {navItem.children.map((navChild) => {
+            const isActive = activeCategory?.id === navChild.id;
 
             return (
               <Button
-                key={category.id}
-                type="button"   
-                LinkComponent={Link}
-                href={item.type === 'product' && category.path !=="brands" ? `products/${category.path}` : '#'}
+                key={navChild.id}
+                type="button"
+                LinkComponent={
+                  navItem.type === 'product' && navChild.path !== 'brands' ? Link : 'div'
+                }
+                href={
+                  navItem.type === 'product' && navChild.path !== 'brands'
+                    ? `products/${navChild.path}`
+                    : undefined
+                }
                 size="small"
                 variant="text"
                 color="inherit"
                 disableRipple
-                onMouseEnter={() => setActiveCategory(category)}
-                onFocus={() => setActiveCategory(category)}
+                onMouseEnter={() => setActiveCategory(navChild)}
+                onFocus={() => setActiveCategory(navChild)}
                 className={clsx(
                   'min-h-[64px] w-full justify-start gap-3 rounded-2xl px-4 py-3 text-right text-lg font-medium transition-all duration-200',
                   isActive
@@ -56,7 +62,7 @@ export default function NavContainer({ item }: NavContainerProps) {
                       : 'bg-background-paper text-text-primary',
                   )}
                 >
-                  {item.type === 'product' ? (
+                  {navItem.type === 'product' ? (
                     <FiGrid className="size-5" />
                   ) : (
                     <IoCarSportOutline className="size-5" />
@@ -64,7 +70,7 @@ export default function NavContainer({ item }: NavContainerProps) {
                 </span>
 
                 {/* Text */}
-                <span>{category.faName}</span>
+                <span>{navChild.faName}</span>
               </Button>
             );
           })}
@@ -74,21 +80,21 @@ export default function NavContainer({ item }: NavContainerProps) {
 
         <div className="mr-5 min-w-0 flex-1 rounded-[20px] bg-background-paper p-6">
           {/* product Item */}
-          {item.type === 'product' && (
+          {navItem.type === 'product' && (
             <div className="flex h-full">
               <div className="flex w-[240px] flex-col gap-1">
-                {activeCategory?.children?.map((subCategory) => (
+                {activeCategory?.children?.map((subChild) => (
                   <Button
-                    key={subCategory.id}
+                    key={subChild.id}
                     component={LinkComponent}
-                    href={subCategory.path}
+                    href={subChild.path}
                     variant="text"
                     color="inherit"
                     size="medium"
                     disableRipple
                     className="w-full justify-start rounded-lg bg-transparent px-3 py-2 text-right font-medium text-text-primary transition-colors duration-200 hover:text-primary-main"
                   >
-                    {subCategory.faName}
+                    {subChild.faName}
                   </Button>
                 ))}
               </div>
@@ -96,7 +102,7 @@ export default function NavContainer({ item }: NavContainerProps) {
           )}
 
           {/* car Item */}
-          {item.type === 'car' && (
+          {navItem.type === 'car' && (
             <div className="grid w-full grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-9">
               {activeCategory?.children?.map((car) => (
                 <Button

@@ -12,16 +12,18 @@ import {
   ListItemText,
 } from '@mui/material';
 import clsx from 'clsx';
-import * as React from 'react';
+
 import { FaRegCircle } from 'react-icons/fa';
 import { IoMenuOutline } from 'react-icons/io5';
 import { TfiAngleDown, TfiAngleLeft } from 'react-icons/tfi';
 import TopSideBarSectionMobile from './topSideBarSectionMobile';
+import Link from 'next/link';
+import { useState } from 'react';
 
-export default function MobileNavBurgerMenu({headerData}:{headerData:HeaderData}) {
-  const [open, setOpen] = React.useState(false);
-  const [openedNavItemId, setOpenedNavItemId] = React.useState<number | null>(null);
-  const [openedChildItemId, setOpenedChildItemId] = React.useState<number | null>(null);
+export default function MobileNavBurgerMenu({ headerData }: { headerData: HeaderData }) {
+  const [open, setOpen] = useState(false);
+  const [openedNavItemId, setOpenedNavItemId] = useState<number | null>(null);
+  const [openedChildItemId, setOpenedChildItemId] = useState<number | null>(null);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -72,16 +74,21 @@ export default function MobileNavBurgerMenu({headerData}:{headerData:HeaderData}
           },
         }}
       >
-        <div className="w-full" role="navigation" >
+        <div className="w-full" role="navigation">
+
           <TopSideBarSectionMobile />
 
+          {/*menu*/}
           <List disablePadding>
+
+            {/* lvl 1 */}
             {headerData.menu.map((navItem) => {
               const hasChildren = (navItem.children?.length ?? 0) > 0;
               const isNavItemOpen = openedNavItemId === navItem.id;
 
               return (
-                <React.Fragment key={navItem.id}>
+                
+                <div key={navItem.id}>
                   <ListItem
                     disablePadding
                     className={clsx(
@@ -90,8 +97,8 @@ export default function MobileNavBurgerMenu({headerData}:{headerData:HeaderData}
                     )}
                   >
                     <ListItemButton
-                      component={LinkComponent}
-                      href={navItem.path ?? '#'}
+                      component={navItem.path ? Link : 'div'}
+                      href={navItem.path ? navItem.path : undefined}
                       onClick={closeDrawer}
                       className="flex min-h-14 flex-1 items-center gap-2"
                     >
@@ -104,7 +111,6 @@ export default function MobileNavBurgerMenu({headerData}:{headerData:HeaderData}
                         type="button"
                         onClick={(event) => toggleOpenNavBarItem(event, navItem)}
                         className="flex w-14 shrink-0 items-center justify-center self-stretch"
-                        
                       >
                         {isNavItemOpen ? <TfiAngleDown /> : <TfiAngleLeft />}
                       </ButtonBase>
@@ -115,18 +121,20 @@ export default function MobileNavBurgerMenu({headerData}:{headerData:HeaderData}
                     <Collapse in={isNavItemOpen} timeout="auto">
                       <List disablePadding className="bg-background-default">
                         {navItem.children.map((childItem) => {
-                          const hasChildItems = Boolean(childItem.children && childItem.children.length);
+                          const hasChildItems = Boolean(
+                            childItem.children && childItem.children.length,
+                          );
                           const isChildItemOpen = openedChildItemId === childItem.id;
 
                           return (
-                            <React.Fragment key={childItem.id}>
+                            <div key={childItem.id}>
                               <ListItem
                                 disablePadding
                                 className="flex w-full items-stretch"
                               >
                                 <ListItemButton
-                                  component={LinkComponent}
-                                  href={childItem.path ?? '#'}
+                                  component={childItem.path ? Link : 'div'}
+                                  href={childItem.path ? childItem.path : undefined}
                                   onClick={closeDrawer}
                                   className="flex min-h-12 flex-1 items-center gap-2 pr-8"
                                 >
@@ -140,7 +148,6 @@ export default function MobileNavBurgerMenu({headerData}:{headerData:HeaderData}
                                       toggleOpenNavBarChildItem(event, childItem)
                                     }
                                     className="flex w-14 shrink-0 items-center justify-center self-stretch"
-                                   
                                   >
                                     {isChildItemOpen ? (
                                       <TfiAngleDown />
@@ -151,6 +158,7 @@ export default function MobileNavBurgerMenu({headerData}:{headerData:HeaderData}
                                 ) : null}
                               </ListItem>
 
+                                {/* lvl 3 */}
                               {hasChildItems ? (
                                 <Collapse in={isChildItemOpen} timeout="auto">
                                   <List disablePadding>
@@ -173,16 +181,17 @@ export default function MobileNavBurgerMenu({headerData}:{headerData:HeaderData}
                                   </List>
                                 </Collapse>
                               ) : null}
-                            </React.Fragment>
+                            </div>
                           );
                         })}
                       </List>
                     </Collapse>
                   ) : null}
-                </React.Fragment>
+                </div>
               );
             })}
           </List>
+
         </div>
       </Drawer>
     </div>
