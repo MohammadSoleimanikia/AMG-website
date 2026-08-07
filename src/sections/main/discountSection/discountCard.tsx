@@ -1,9 +1,9 @@
 import { ProductTypes } from '@/_types/_product';
 import Image from '@/components/image';
-import LinkComponent from '@/components/linkComponent';
 import { PRODUCTS } from '@/path';
 import { Typography } from '@mui/material';
 import clsx from 'clsx';
+import Link from 'next/link';
 import React from 'react';
 
 export default function DiscountCard({
@@ -14,7 +14,7 @@ export default function DiscountCard({
   type?: 'primary' | 'secondary';
 }) {
   return (
-    <LinkComponent href={`${PRODUCTS}/${product.en_name}`} className="group block h-full text-center">
+    <Link href={`${PRODUCTS}/${product.en_name}`} className="group block h-full text-center">
       <div
         className={clsx(
           'inline-block size-[3.75rem] overflow-hidden rounded-full leading-none',
@@ -43,6 +43,6 @@ export default function DiscountCard({
       >
         {product.name}
       </Typography>
-    </LinkComponent>
+    </Link>
   );
 }

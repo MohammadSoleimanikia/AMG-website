@@ -1,11 +1,11 @@
-import LinkComponent from '@/components/linkComponent';
 import { Badge, IconButton } from '@mui/material';
+import Link from 'next/link';
 import { GoBell } from 'react-icons/go';
 
 export default function NotificationButton() {
   return (
     <IconButton
-      component={LinkComponent}
+      component={Link}
       href="/notifications"
       size="small"
       className="flex-shrink-0"

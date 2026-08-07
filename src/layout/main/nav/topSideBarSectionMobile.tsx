@@ -1,6 +1,6 @@
-import LinkComponent from '@/components/linkComponent';
 import { ButtonBase, Skeleton } from '@mui/material';
 import clsx from 'clsx';
+import Link from 'next/link';
 import { FaUser } from 'react-icons/fa6';
 
 export default function TopSideBarSectionMobile() {
@@ -20,7 +20,7 @@ export default function TopSideBarSectionMobile() {
       </span>
 
       <ButtonBase
-        LinkComponent={LinkComponent}
+        LinkComponent={Link}
         href="/login"
         className="mb-4 h-12 w-28 !rounded-lg bg-common-white text-center font-yekan_bakh font-medium"
       >

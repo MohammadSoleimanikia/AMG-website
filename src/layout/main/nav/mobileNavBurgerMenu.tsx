@@ -1,7 +1,6 @@
 'use client';
 
 import type { HeaderData, NavBarChildItem, NavBarItem } from '@/_types/_header';
-import LinkComponent from '@/components/linkComponent';
 import {
   ButtonBase,
   Collapse,
@@ -169,7 +168,7 @@ export default function MobileNavBurgerMenu({ headerData }: { headerData: Header
                                         className="bg-background-default"
                                       >
                                         <ListItemButton
-                                          component={LinkComponent}
+                                          component={Link}
                                           href={subChild.path}
                                           onClick={closeDrawer}
                                           className="min-h-11 pr-12"

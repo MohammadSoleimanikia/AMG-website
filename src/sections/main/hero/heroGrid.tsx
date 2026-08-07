@@ -1,14 +1,11 @@
 import { HomeType } from '@/_types/_home';
 import Image from '@/components/image';
-import LinkComponent from '@/components/linkComponent';
 import { PRODUCTS } from '@/path';
 import { TOP_MARGIN } from '@/utils/layout';
 import { Grid } from '@mui/material';
 import clsx from 'clsx';
+import Link from 'next/link';
 
-type HeroGridProps = {
-  images: string[];
-};
 
 export default function HeroGrid({ images }:{images:HomeType.GroupParent[]} ) {
   return (
@@ -16,11 +13,11 @@ export default function HeroGrid({ images }:{images:HomeType.GroupParent[]} ) {
       container
       spacing={{ xs: 2, md: 3 }}
       columns={{ xs: 4 }}
-      className={clsx(TOP_MARGIN, 'h-full w-full')}
+      className={clsx('h-full w-full')}
     >
       {images.map((image, index) => (
         <Grid key={image.enTitle} size={{ xs: 2, md: 1 }}>
-          <LinkComponent
+          <Link
             key={image.enTitle}
             href={`${PRODUCTS}/${image.enTitle}`}
             className="2xl:min-h-[233px] block size-full overflow-hidden rounded-xl"
@@ -35,7 +32,7 @@ export default function HeroGrid({ images }:{images:HomeType.GroupParent[]} ) {
                 />
               </div>
             </div>
-          </LinkComponent>
+          </Link>
         </Grid>
       ))}
     </Grid>

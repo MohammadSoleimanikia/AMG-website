@@ -1,4 +1,3 @@
-import LinkComponent from '@/components/linkComponent';
 import { ButtonBase } from '@mui/material';
 import clsx from 'clsx';
 import Link from 'next/link';

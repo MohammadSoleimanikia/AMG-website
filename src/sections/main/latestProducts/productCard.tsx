@@ -1,8 +1,8 @@
 import { ProductTypes } from '@/_types/_product';
 import Image from '@/components/image';
-import LinkComponent from '@/components/linkComponent';
 import { PRODUCTS } from '@/path';
 import { ButtonBase, Card, Tooltip, Typography } from '@mui/material';
+import Link from 'next/link';
 import { IoEyeOutline } from 'react-icons/io5';
 
 type ProductCardProps = {
@@ -17,7 +17,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="absolute right-4 top-4 z-10">
         <Tooltip title="مشاهده جزئیات" placement="top">
           <ButtonBase
-            LinkComponent={LinkComponent}
+            LinkComponent={Link}
             href={href}
             className="hidden !size-9 !items-center !justify-center !rounded-full bg-background-default text-text-primary transition-colors duration-200 hover:bg-primary-main hover:text-common-white sm:!flex"
           >
@@ -26,7 +26,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Tooltip>
       </div>
 
-      <LinkComponent
+      <Link
         href={href}
         className="flex flex-1 flex-col justify-between"
       >
@@ -62,7 +62,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </span>
           </div>
         </div>
-      </LinkComponent>
+      </Link>
     </Card>
   );
 }

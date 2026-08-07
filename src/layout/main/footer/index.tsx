@@ -1,7 +1,6 @@
 import Image from '@/components/image';
-import LinkComponent from '@/components/linkComponent';
-import { TOP_MARGIN } from '@/utils/layout';
-import { Card, Container, Paper, Typography } from '@mui/material';
+import {  TOP_PADDING } from '@/utils/layout';
+import { Card, Container,  Typography } from '@mui/material';
 import clsx from 'clsx/lite';
 import { TbWorld } from 'react-icons/tb';
 import { HiOutlineMail, HiOutlinePhone } from 'react-icons/hi';
@@ -11,6 +10,7 @@ import MobileBottomBar from './mobileBottomBar';
 import { fetchFooterData } from '@/services/footerDataService';
 import FooterMenu from './footerMenu';
 import SocialLink from './socialLink';
+import Link from 'next/link';
 
 const processItems = [
   { id: 1, title: 'تیکت', icon: "https://amgplus.ir/img/discussion.png" },
@@ -26,7 +26,7 @@ export default async function Footer() {
   }
 
   return (
-    <footer className={clsx(TOP_MARGIN, 'bg-background-paper pb-24 pt-24 xl:pb-0')}>
+    <footer className={clsx(TOP_PADDING, 'bg-background-paper pb-24 pt-24 xl:pb-0')}>
       <StoreFeatures features={footerData.data.features} />
       <Container maxWidth="xxl">
         <div className="mt-12 grid grid-cols-1 gap-6 xl:grid-cols-[repeat(14,minmax(0,1fr))]">
@@ -77,12 +77,12 @@ export default async function Footer() {
           <div className="order-3 flex flex-col justify-center gap-4 xl:order-none xl:col-span-3 xl:justify-start">
             {/* mail section */}
             <div className="flex items-center justify-center gap-3 text-sm text-text-primary xl:justify-end">
-              <LinkComponent
+              <Link
                 className="pt-1 text-lg font-semibold"
                 href={`mailto:${footerData.data.email ? footerData.data.email : 'example@mail.com'}`}
               >
                 {footerData.data.email ? footerData.data.email : 'example@gmail.com'}
-              </LinkComponent>
+              </Link>
               <span className="flex size-14 items-center justify-center rounded-xl bg-background-default shadow-s3">
                 <HiOutlineMail className="size-[60px] rounded-2xl bg-background-default p-4" />
               </span>
@@ -142,14 +142,14 @@ export default async function Footer() {
             پیاده‌سازی توسط <span className="font-bold text-primary-main">وبتو</span>
           </p>
 
-          <LinkComponent href={'webeto.com'} className="flex items-center gap-2">
+          <Link href={'webeto.com'} className="flex items-center gap-2">
             <p>
               <span className="font-semibold text-primary-main">WEBETO</span>.co
             </p>
             <span className="flex size-9 items-center justify-center rounded-full bg-primary-main text-common-white">
               <TbWorld className="size-7" />
             </span>
-          </LinkComponent>
+          </Link>
         </div>
       </Container>
       <MobileBottomBar />

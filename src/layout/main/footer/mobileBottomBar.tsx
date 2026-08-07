@@ -1,7 +1,7 @@
 'use client';
 
-import LinkComponent from '@/components/linkComponent';
-import { Badge, Container } from '@mui/material';
+import { Container } from '@mui/material';
+import Link from 'next/link';
 import { BsCart3 } from 'react-icons/bs';
 import { FiHome, FiUser } from 'react-icons/fi';
 
@@ -14,7 +14,7 @@ export default function MobileBottomBar() {
         >
           <div className="mx-auto flex  items-center justify-between">
             {/* cart */}
-            <LinkComponent
+            <Link
               href="/cart"
               className="flex items-center gap-2 rounded-full bg-success-main px-5 py-3 text-common-white shadow-success"
             >
@@ -22,22 +22,22 @@ export default function MobileBottomBar() {
                 <BsCart3 className="size-5" />
               </div>
               سبد خرید
-            </LinkComponent>
+            </Link>
 
             {/* left items */}
             <div className="flex">
-              <LinkComponent
+              <Link
                 href="/profile"
                 className="flex size-11 items-center justify-center rounded-full text-text-primary"
               >
                 <FiUser className="size-5" />
-              </LinkComponent>
-              <LinkComponent
+              </Link>
+              <Link
                 href="/"
                 className="flex size-11 items-center justify-center rounded-full text-text-primary"
               >
                 <FiHome className="size-5" />
-              </LinkComponent>
+              </Link>
             </div>
           </div>
         </nav>

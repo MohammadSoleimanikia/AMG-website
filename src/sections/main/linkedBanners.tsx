@@ -1,8 +1,8 @@
 import { HomeType } from '@/_types/_home';
 import Image from '@/components/image';
-import LinkComponent from '@/components/linkComponent';
 import {  TOP_PADDING } from '@/utils/layout';
 import Grid from '@mui/material/Grid';
+import Link from 'next/link';
 
 type LinkedBannersProps = {
   banners: HomeType.BannerType[];
@@ -10,13 +10,12 @@ type LinkedBannersProps = {
 
 export default function LinkedBanners({ banners }: LinkedBannersProps) {
   return (
-    // dont use padding cause we need padding bottom for this
-    <section className={TOP_PADDING}>
+    <section >
       <Grid container spacing={{ xs: 2, md: 3 }}>
         {banners.map((banner) => (
           <Grid
             key={banner.id}
-            component={LinkComponent}
+            component={Link}
             href={banner.name}
             scroll
             size={{ xs: 12, md: 6 }}

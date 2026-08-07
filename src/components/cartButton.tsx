@@ -1,5 +1,5 @@
-import LinkComponent from '@/components/linkComponent';
 import { Button } from '@mui/material';
+import Link from 'next/link';
 import { BsCart3 } from 'react-icons/bs';
 
 type CartButtonProps = {
@@ -9,7 +9,7 @@ type CartButtonProps = {
 export default function CartButton({ count = 0 }: CartButtonProps) {
   return (
     <Button
-      component={LinkComponent}
+      component={Link}
       href="/cart"
       variant="contained"
       color="primary"

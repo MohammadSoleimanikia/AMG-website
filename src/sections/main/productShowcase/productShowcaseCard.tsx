@@ -1,9 +1,9 @@
 import Image from '@/components/image';
 import { Tooltip, Typography } from '@mui/material';
-import LinkComponent from '@/components/linkComponent';
 import { IoEyeOutline } from 'react-icons/io5';
 import { ProductTypes } from '@/_types/_product';
 import { PRODUCTS } from '@/path';
+import Link from 'next/link';
 
 type ProductShowcaseCardProps = {
   product: ProductTypes.Product;
@@ -12,7 +12,7 @@ type ProductShowcaseCardProps = {
 export default function ProductShowcaseCard({ product }: ProductShowcaseCardProps) {
   return (
     <article className="group relative flex w-full flex-col overflow-hidden">
-      <LinkComponent
+      <Link
         href={product.categoryPath || ""}
         className="flex cursor-grab justify-center overflow-hidden rounded-[20px_20px_30px_30px] bg-background-paper p-3.5 sm:p-8"
       >
@@ -22,10 +22,10 @@ export default function ProductShowcaseCard({ product }: ProductShowcaseCardProp
           alt={product.name}
           className="aspect-square sm:size-[60%] lg:size-32 [&_img]:object-cover"
         />
-      </LinkComponent>
+      </Link>
 
       <div className="relative sm:px-5">
-        <LinkComponent
+        <Link
           href={`products/${product.en_name}`}
           className="flex min-h-[178px] w-full flex-col justify-between sm:min-h-[153px]"
         >
@@ -60,26 +60,26 @@ export default function ProductShowcaseCard({ product }: ProductShowcaseCardProp
               تومان
             </Typography>
           </div>
-        </LinkComponent>
+        </Link>
 
         <div className="absolute bottom-[-200px] left-0 right-0 flex items-center justify-between gap-2 rounded-3xl bg-background-paper px-3 py-3.5 transition-all duration-300 ease-in-out group-focus-within:bottom-0 group-hover:bottom-0">
           <Tooltip title="مشاهده جزئیات" placement="top">
-            <LinkComponent
+            <Link
               href={`${PRODUCTS}/${product.en_name}`}
               className=" rounded-full bg-warning-main  text-[1.5rem] text-common-white transition-colors duration-200 hover:bg-background-default hover:text-text-secondary focus-visible:bg-background-default focus-visible:text-text-secondary"
             >
               <div className='size-10 flex items-center justify-center'>
                 <IoEyeOutline className="size-6" />
               </div>
-            </LinkComponent>
+            </Link>
           </Tooltip>
 
-          <LinkComponent
+          <Link
             href={`${PRODUCTS}/${product.en_name}`}
             className="rounded-full bg-background-default px-2.5 py-1.5 text-body1 leading-[1.8] transition-all duration-200 hover:bg-primary-main hover:text-common-white focus-visible:bg-primary-main focus-visible:text-common-white"
           >
             جزئیات
-          </LinkComponent>
+          </Link>
         </div>
       </div>
     </article>

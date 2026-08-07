@@ -1,11 +1,11 @@
-import LinkComponent from '@/components/linkComponent';
 import { Button, Typography } from '@mui/material';
+import Link from 'next/link';
 import { FaRegUser } from 'react-icons/fa6';
 
 export default function RegisterButton({className}:{className?:string}) {
   return (
     <Button
-      component={LinkComponent}
+      component={Link}
       href="/login"
       size="small"
       className={`flex items-center gap-3 !rounded-2xl bg-background-paper py-3 px-4 text-text-primary  ${className}`}

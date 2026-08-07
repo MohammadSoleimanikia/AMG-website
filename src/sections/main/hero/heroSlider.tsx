@@ -11,7 +11,7 @@ import type { HomeType } from '@/_types/_home';
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import useIsMounted from '@/hooks/useIsMounted';
-import LinkComponent from '@/components/linkComponent';
+import Link from 'next/link';
 
 export default function HeroSlider({ images }: { images: HomeType.BannerType[] }) {
   const isMounted = useIsMounted();
@@ -40,7 +40,7 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
   };
 
   return (
-    <div className="relative sm:my-[2.5rem] lg:my-[3.75rem]">
+    <div className={clsx("relative w-full")}>
       {/* Main Hero Swiper */}
       <Swiper
         className="relative h-[200px] overflow-hidden rounded-[20px] sm:h-[250px] md:h-[300px] lg:h-[450px] lg:rounded-[40px]"
@@ -64,7 +64,7 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
       >
         {images.map((image, index) => (
           <SwiperSlide key={`hero-${image}-${index}`} className="!h-full overflow-hidden">
-            <LinkComponent href={`products?sort=${image.link}`} className="h-full w-full">
+            <Link href={`products?sort=${image.link}`} className="h-full w-full">
               <Image
                 visibleByDefault
                 src={image.image}
@@ -74,7 +74,7 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
                   '[&_img]:object-center',
                 )}
               />
-            </LinkComponent>
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
