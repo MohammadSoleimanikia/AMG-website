@@ -29,7 +29,7 @@ export default function RootLayout({
         <CacheProvider>
           <ThemeProvider>
             <HomeHeader />
-            <main className="min-h-screen bg-background-default pb-4 pt-[calc(76px+56px)] xl:pt-[calc(116px+60px)]">
+            <main className="bg-background-default  pt-[calc(76px+56px)] xl:pt-[calc(116px+60px)]">
               {children}
             </main>
             <Footer />
