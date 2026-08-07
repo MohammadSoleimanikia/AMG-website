@@ -1,6 +1,7 @@
 import { ProductTypes } from '@/_types/_product';
 import Image from '@/components/image';
 import LinkComponent from '@/components/linkComponent';
+import { PRODUCTS } from '@/path';
 import { ButtonBase, Card, Tooltip, Typography } from '@mui/material';
 import { IoEyeOutline } from 'react-icons/io5';
 
@@ -9,7 +10,7 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const href = `/product/${product.en_name}`;
+  const href = `${PRODUCTS}/${product.en_name}`;
 
   return (
     <Card className="group relative flex h-full flex-col overflow-hidden !rounded-3xl bg-background-paper !p-0 shadow-s16">

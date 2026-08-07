@@ -10,6 +10,7 @@ import type { Swiper as SwiperType } from 'swiper';
 import { HomeType } from '@/_types/_home';
 import LatestProductInfoCard from './latestProducts/productInfoCard';
 import { TOP_MARGIN } from '@/utils/layout';
+import { PRODUCTS } from '@/path';
 
 type LatestProductsSectionProps = {
   data: HomeType.LatestProducts;
@@ -60,7 +61,7 @@ export default function ProductCollectionSection({ data }: LatestProductsSection
           </div>
 
           <div className="flex w-full items-center justify-center gap-6 self-end sm:justify-end sm:self-auto md:gap-2">
-            <MoreProductButton link={'/products?sort=latest'} />
+            <MoreProductButton link={`${PRODUCTS}?sort=latest`} />
             <SliderNavigationButton
               handleNextSlide={handleNextSlide}
               handlePrevSlide={handlePreviousSlide}

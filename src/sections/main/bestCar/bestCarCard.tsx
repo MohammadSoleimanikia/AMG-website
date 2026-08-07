@@ -1,5 +1,6 @@
 import { HomeType } from '@/_types/_home';
 import Image from '@/components/image';
+import { PRODUCTS } from '@/path';
 import { Typography } from '@mui/material';
 import clsx from 'clsx';
 import Link from 'next/link';
@@ -10,7 +11,7 @@ type BestCarCardProps = {
 };
 
 export default function BestCarCard({ car, selected = false }: BestCarCardProps) {
-  const href = car.en_name ? `/products/car/${car.en_name}` : '/products/car';
+  const href = car.en_name ? `${PRODUCTS}/car/${car.en_name}` : `${PRODUCTS}/car`;
 
   return (
     <div

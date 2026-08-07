@@ -13,6 +13,7 @@ import BestCarsSliderFallback from './bestCar/bestCarsSliderFallback';
 import useIsMounted from '@/hooks/useIsMounted';
 import { TOP_MARGIN } from '@/utils/layout';
 import { HomeType } from '@/_types/_home';
+import { PRODUCTS } from '@/path';
 
 export default function BestCars({bestCarData}:{bestCarData:HomeType.CategorySection}) {
   const isMounted = useIsMounted();
@@ -66,7 +67,7 @@ export default function BestCars({bestCarData}:{bestCarData:HomeType.CategorySec
 
               <div className="lg:hidden">
                 <div className="flex items-center gap-6 sm:w-fit sm:flex-row md:gap-2">
-                  <MoreProductButton link="/products" />
+                  <MoreProductButton link={PRODUCTS} />
                   <SliderNavigationButton
                     handleNextSlide={handleNextSlide}
                     handlePrevSlide={handlePrevSlide}
