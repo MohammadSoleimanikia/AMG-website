@@ -1,8 +1,7 @@
 'use client';
 
-import type { NavBarChildItem, NavBarItem } from '@/_types/_header';
+import type { HeaderData, NavBarChildItem, NavBarItem } from '@/_types/_header';
 import LinkComponent from '@/components/linkComponent';
-import { ALL_NAVBAR_ITEMS } from '@/mockData/navData';
 import {
   ButtonBase,
   Collapse,
@@ -19,7 +18,7 @@ import { IoMenuOutline } from 'react-icons/io5';
 import { TfiAngleDown, TfiAngleLeft } from 'react-icons/tfi';
 import TopSideBarSectionMobile from './topSideBarSectionMobile';
 
-export default function MobileNavBurgerMenu() {
+export default function MobileNavBurgerMenu({headerData}:{headerData:HeaderData}) {
   const [open, setOpen] = React.useState(false);
   const [openedNavItemId, setOpenedNavItemId] = React.useState<number | null>(null);
   const [openedChildItemId, setOpenedChildItemId] = React.useState<number | null>(null);
@@ -59,7 +58,6 @@ export default function MobileNavBurgerMenu() {
         type="button"
         className="!rounded-xl bg-grey-200 p-2"
         onClick={toggleDrawer(true)}
-        aria-label="باز کردن منوی اصلی"
       >
         <IoMenuOutline className="size-6" />
       </ButtonBase>
@@ -74,12 +72,12 @@ export default function MobileNavBurgerMenu() {
           },
         }}
       >
-        <div className="w-full" role="navigation" aria-label="منوی موبایل">
+        <div className="w-full" role="navigation" >
           <TopSideBarSectionMobile />
 
           <List disablePadding>
-            {ALL_NAVBAR_ITEMS.map((navItem) => {
-              const hasChildren = navItem.children.length > 0;
+            {headerData.menu.map((navItem) => {
+              const hasChildren = (navItem.children?.length ?? 0) > 0;
               const isNavItemOpen = openedNavItemId === navItem.id;
 
               return (
@@ -106,12 +104,7 @@ export default function MobileNavBurgerMenu() {
                         type="button"
                         onClick={(event) => toggleOpenNavBarItem(event, navItem)}
                         className="flex w-14 shrink-0 items-center justify-center self-stretch"
-                        aria-label={
-                          isNavItemOpen
-                            ? `بستن ${navItem.faName}`
-                            : `باز کردن ${navItem.faName}`
-                        }
-                        aria-expanded={isNavItemOpen}
+                        
                       >
                         {isNavItemOpen ? <TfiAngleDown /> : <TfiAngleLeft />}
                       </ButtonBase>
@@ -122,7 +115,7 @@ export default function MobileNavBurgerMenu() {
                     <Collapse in={isNavItemOpen} timeout="auto">
                       <List disablePadding className="bg-background-default">
                         {navItem.children.map((childItem) => {
-                          const hasChildItems = Boolean(childItem.children?.length);
+                          const hasChildItems = Boolean(childItem.children && childItem.children.length);
                           const isChildItemOpen = openedChildItemId === childItem.id;
 
                           return (
@@ -147,12 +140,7 @@ export default function MobileNavBurgerMenu() {
                                       toggleOpenNavBarChildItem(event, childItem)
                                     }
                                     className="flex w-14 shrink-0 items-center justify-center self-stretch"
-                                    aria-label={
-                                      isChildItemOpen
-                                        ? `بستن ${childItem.faName}`
-                                        : `باز کردن ${childItem.faName}`
-                                    }
-                                    aria-expanded={isChildItemOpen}
+                                   
                                   >
                                     {isChildItemOpen ? (
                                       <TfiAngleDown />

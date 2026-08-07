@@ -1,6 +1,5 @@
 'use client';
 
-import type { CarData } from '@/mockData/bestCarData';
 import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import BestCarCard from './bestCarCard';

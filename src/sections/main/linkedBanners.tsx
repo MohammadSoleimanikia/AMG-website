@@ -1,8 +1,7 @@
 import { HomeType } from '@/_types/_home';
 import Image from '@/components/image';
 import LinkComponent from '@/components/linkComponent';
-import type { LinkedBannerItem } from '@/mockData/linkedBannerData';
-import { TOP_MARGIN, TOP_PADDING } from '@/utils/layout';
+import {  TOP_PADDING } from '@/utils/layout';
 import Grid from '@mui/material/Grid';
 
 type LinkedBannersProps = {
@@ -21,7 +20,6 @@ export default function LinkedBanners({ banners }: LinkedBannersProps) {
             href={banner.name}
             scroll
             size={{ xs: 12, md: 6 }}
-            aria-label={banner.name}
             className="block"
           >
             <Image

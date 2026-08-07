@@ -1,11 +1,11 @@
-import type { ProductShowcaseData } from '@/mockData/productShowcaseData';
 import { ButtonBase, Card, Typography } from '@mui/material';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import ProductShowcaseIcon from './productShowcaseIcon';
+import { HomeType } from '@/_types/_home';
 
 type ProductShowcaseInfoCardProps = Pick<
-  ProductShowcaseData,
-  'title' | 'subtitle' | 'description'
+  HomeType.ProductListSection,
+  'title' | 'subTitle' | 'description'
 > & {
   onNext: () => void;
   onPrevious: () => void;
@@ -13,7 +13,7 @@ type ProductShowcaseInfoCardProps = Pick<
 
 export default function ProductShowcaseInfoCard({
   title,
-  subtitle,
+  subTitle,
   description,
   onNext,
   onPrevious,
@@ -41,7 +41,7 @@ export default function ProductShowcaseInfoCard({
               variant="body2"
               className="mt-0.5 text-center text-grey-200 md:text-start lg:mt-2"
             >
-              {subtitle}
+              {subTitle}
             </Typography>
           </div>
         </div>
@@ -56,7 +56,6 @@ export default function ProductShowcaseInfoCard({
           <ButtonBase
             type="button"
             onClick={onPrevious}
-            aria-label="محصول بعدی"
             className={navigationButtonClassName}
           >
             <IoIosArrowForward className="text-lg lg:text-[1.3rem]" />
@@ -65,7 +64,6 @@ export default function ProductShowcaseInfoCard({
           <ButtonBase
             type="button"
             onClick={onNext}
-            aria-label="محصول قبلی"
             className={navigationButtonClassName}
           >
             <IoIosArrowBack className="text-lg lg:text-[1.3rem]" />

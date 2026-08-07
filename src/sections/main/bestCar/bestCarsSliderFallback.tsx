@@ -1,6 +1,5 @@
 'use client';
 
-import type { CarData } from '@/mockData/bestCarData';
 import BestCarCard from './bestCarCard';
 import { HomeType } from '@/_types/_home';
 

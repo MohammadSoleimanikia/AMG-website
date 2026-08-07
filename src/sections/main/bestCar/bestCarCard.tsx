@@ -1,6 +1,5 @@
 import { HomeType } from '@/_types/_home';
 import Image from '@/components/image';
-import type { CarData } from '@/mockData/bestCarData';
 import { Typography } from '@mui/material';
 import clsx from 'clsx';
 import Link from 'next/link';

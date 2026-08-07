@@ -1,5 +1,4 @@
 import { FooterFeatures } from '@/_types/_footer';
-import { STORE_FEATURES } from '@/mockData/footerData';
 import setSvgHtml from '@/utils/setSvgHtml';
 import {  Container, Typography } from '@mui/material';
 import clsx from 'clsx';
