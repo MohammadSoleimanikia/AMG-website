@@ -8,7 +8,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { ButtonBase, Skeleton } from '@mui/material';
 import { TfiAngleLeft, TfiAngleRight } from 'react-icons/tfi';
 import type { HomeType } from '@/_types/_home';
-import 'swiper/css';
 import { useRef, useState } from 'react';
 import clsx from 'clsx';
 import useIsMounted from '@/hooks/useIsMounted';
