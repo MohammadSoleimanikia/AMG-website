@@ -3,12 +3,11 @@ import { API_BASE_URL } from '@/utils/config';
 
 export async function globalFetch<T>(
   endPoint: string,
-  revalidateTime: number = 60,
   restProps?: RequestInit,
 ): Promise<BaseResponse<T>> {
   try {
     let response = await fetch(`${API_BASE_URL}${endPoint}`, {
-      next: { revalidate: revalidateTime },
+      next: { revalidate: restProps?.next?.revalidate || 60},
       cache: 'force-cache',
       ...restProps,
     });
