@@ -1,6 +1,5 @@
 import { Container } from '@mui/material';
 import BestCars from './bestCars';
-import Hero from './hero';
 import ProductShowcase from './productShowcase';
 import BestOffer from './bestOffer';
 import LinkedBanners from './linkedBanners';
@@ -9,6 +8,10 @@ import LatestProducts from './latestProducts';
 
 import { fetchHomeData } from '@/services/homeDataService';
 import BestProducts from './bestProducts';
+import SectionWrapper from '@/components/SectionWrapper';
+import HeroSlider from './hero/heroSlider';
+import LatestProductsSVG from './linkedBanners/latestProductsSVG';
+import BestProductsSVG from './bestProducts/bestProductsSVG';
 
 export default async function MainHome() {
   const homeData = await fetchHomeData();
@@ -18,37 +21,49 @@ export default async function MainHome() {
 
   return (
     <div className="overflow-hidden">
-      <Container maxWidth="xxl">
-        <Hero images={homeData.data.topCarousel} />
-        <HeroGrid images={homeData.data.groupParents} />
-      </Container>
+      <SectionWrapper>
+        <HeroSlider images={homeData.data.topCarousel} />
+      </SectionWrapper>
 
-      <BestCars bestCarData={homeData.data.categoryList} />
-      <ProductShowcase productList={homeData.data.productList} />
+      <SectionWrapper>
+        <HeroGrid images={homeData.data.groupParents} />
+      </SectionWrapper>
+
+      <SectionWrapper container={false}>
+        <BestCars bestCarData={homeData.data.categoryList} />
+      </SectionWrapper>
+
+      <SectionWrapper containerClassName="bg-common-white" className="bg-common-white">
+        <ProductShowcase productList={homeData.data.productList} />
+      </SectionWrapper>
 
       {/* linked banner */}
       <div className="relative bg-common-white">
-        <Container maxWidth="xxl" className="relative">
+        <SectionWrapper containerClassName="relative">
           <LinkedBanners banners={[homeData.data.banners[0], homeData.data.banners[1]]} />
-        </Container>
+        </SectionWrapper>
         {/* svg pattern */}
         <div className="absolute bottom-0 left-0 w-full rotate-[180deg] -scale-x-100 transform overflow-hidden leading-[0]">
-          <svg
-            className="h-[144px] w-[100%]"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1000 100"
-            preserveAspectRatio="none"
-          >
-            <path className="fill-background-default" d="M0,6V0h1000v100L0,6z"></path>
-          </svg>
+          <LatestProductsSVG />
         </div>
       </div>
-      <LatestProducts data={homeData.data.latestProducts} />
-      <BestOffer discountData={homeData.data.bestOffer} type="secondary" />
-      <Container maxWidth="xxl" className="relative">
+
+      <SectionWrapper>
+        <LatestProducts data={homeData.data.latestProducts} />
+      </SectionWrapper>
+
+      <SectionWrapper>
+        <BestOffer discountData={homeData.data.bestOffer} type="secondary" />
+      </SectionWrapper>
+
+      <SectionWrapper className="relative">
         <LinkedBanners banners={[homeData.data.banners[2], homeData.data.banners[3]]} />
-      </Container>
-      <BestProducts discountData={homeData.data.bestProduct} type="primary" />
+      </SectionWrapper>
+
+      <SectionWrapper className="relative bg-common-white">
+        <BestProducts discountData={homeData.data.bestProduct} type="primary" />
+        <BestProductsSVG/>
+      </SectionWrapper>
     </div>
   );
 }

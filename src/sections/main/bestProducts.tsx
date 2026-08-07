@@ -40,7 +40,7 @@ export default function BestProducts({
     swiper.slidePrev();
   };
   return (
-    <Container maxWidth="xxl" className={clsx(TOP_MARGIN, 'lg:flex')}>
+    <div className={clsx('relative lg:flex z-50 ')}>
       {/* info card */}
       <div
         className={clsx(
@@ -189,6 +189,6 @@ export default function BestProducts({
           )}
         </div>
       </Card>
-    </Container>
+    </div>
   );
 }

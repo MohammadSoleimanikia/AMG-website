@@ -38,7 +38,7 @@ export default function BestOffer({ type = 'primary', discountData }: BestOfferP
   };
 
   return (
-    <Container maxWidth="xxl" className={clsx(TOP_MARGIN, 'lg:flex')}>
+    <div  className={clsx('lg:flex')}>
       {/* info card */}
       <div
         className={clsx(
@@ -187,6 +187,6 @@ export default function BestOffer({ type = 'primary', discountData }: BestOfferP
           )}
         </div>
       </Card>
-    </Container>
+    </div>
   );
 }

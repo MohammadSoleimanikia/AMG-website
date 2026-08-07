@@ -40,7 +40,7 @@ export default function ProductCollectionSection({ data }: LatestProductsSection
   };
 
   return (
-    <Container maxWidth="xxl" className={TOP_MARGIN}>
+    <div>
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div className="mb-[45px] flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="flex flex-col items-center gap-4 sm:flex-row">
@@ -82,6 +82,6 @@ export default function ProductCollectionSection({ data }: LatestProductsSection
           />
         </div>
       </div>
-    </Container>
+    </div>
   );
 }
