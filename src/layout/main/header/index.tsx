@@ -1,4 +1,4 @@
-import NavBar from '@/layout/main/nav/navBar';
+import NavBar from '@/layout/main/nav';
 import TopHeader from './components/topHeader';
 import { fetchHeaderData } from '@/services/headerDataService';
 

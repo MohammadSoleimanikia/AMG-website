@@ -7,8 +7,8 @@ import '@fontsource/roboto/700.css';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
-import Footer from '@/layout/main/footer/footer';
-import HomeHeader from '@/layout/main/header/header';
+import Footer from '@/layout/main/footer';
+import HomeHeader from '@/layout/main/header';
 import CacheProvider from '@/theme/CacheProvider';
 import { Yekan_Bakh } from '@/assets/fonts';
 
@@ -29,7 +29,7 @@ export default function RootLayout({
         <CacheProvider>
           <ThemeProvider>
             <HomeHeader />
-            <main className="min-h-screen bg-background-default pb-4 pt-[calc(76px+56px)] xl:pt-[calc(116px+64px)]">
+            <main className="min-h-screen bg-background-default pb-4 pt-[calc(76px+56px)] xl:pt-[calc(116px+60px)]">
               {children}
             </main>
             <Footer />
