@@ -18,7 +18,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           <ButtonBase
             LinkComponent={LinkComponent}
             href={href}
-            aria-label={`مشاهده جزئیات ${product.name}`}
             className="hidden !size-9 !items-center !justify-center !rounded-full bg-background-default text-text-primary transition-colors duration-200 hover:bg-primary-main hover:text-common-white sm:!flex"
           >
             <IoEyeOutline className="size-5" />
@@ -28,7 +27,6 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <LinkComponent
         href={href}
-        aria-label={`مشاهده ${product.name}`}
         className="flex flex-1 flex-col justify-between"
       >
         <div className="flex items-center justify-center px-10 py-3 sm:pt-10 md:px-12">

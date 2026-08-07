@@ -20,7 +20,6 @@ export default function SearchInput() {
                 endAdornment={
                     <InputAdornment position="end">
                         <IconButton
-                            aria-label={"search"}
                             onClick={() => console.log("search***")}
                             edge="end"
                         >

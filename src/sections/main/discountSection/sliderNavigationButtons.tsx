@@ -20,7 +20,6 @@ export default function SliderNavButtons({
       <ButtonBase
         type="button"
         onClick={handlePrevSlide}
-        aria-label="اسلاید قبلی"
         className={clsx(type==="primary"? "bg-custom-4 ":"bg-background-default",
           "flex size-10 items-center justify-center rounded-full  text-text-primary")}
       >
@@ -29,7 +28,6 @@ export default function SliderNavButtons({
       <ButtonBase
         type="button"
         onClick={handleNextSlide}
-        aria-label="اسلاید بعدی"
         className={clsx(type==="primary"? "bg-custom-4 ":"bg-background-default",
           "flex size-10 items-center justify-center rounded-full  text-text-primary")}
       >

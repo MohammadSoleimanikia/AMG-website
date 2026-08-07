@@ -173,7 +173,6 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[]})
             type="button"
             disabled={images.length <= 1}
             onClick={handleNextSlide}
-            aria-label="اسلاید بعدی"
             className="flex size-9 items-center justify-center rounded-full bg-common-white text-text-primary transition-colors duration-200 hover:bg-common-black hover:text-common-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <TfiAngleLeft className="size-4" />
@@ -183,7 +182,6 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[]})
             type="button"
             disabled={images.length <= 1}
             onClick={handlePreviousSlide}
-            aria-label="اسلاید قبلی"
             className="flex size-9 items-center justify-center rounded-full bg-common-white text-text-primary transition-colors duration-200 hover:bg-common-black hover:text-common-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <TfiAngleRight className="size-4" />
@@ -237,7 +235,6 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[]})
             type="button"
             disabled={images.length <= 1}
             onClick={handleNextSlideMobile}
-            aria-label="اسلاید بعدی"
             className="flex size-7 items-center justify-center rounded-full bg-common-white text-text-primary transition-colors duration-200 hover:bg-common-black hover:text-common-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <TfiAngleLeft className="size-4" />
@@ -247,7 +244,6 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[]})
             type="button"
             disabled={images.length <= 1}
             onClick={handlePreviousSlideMobile}
-            aria-label="اسلاید قبلی"
             className="flex size-7 items-center justify-center rounded-full bg-common-white text-text-primary transition-colors duration-200 hover:bg-common-black hover:text-common-white disabled:cursor-not-allowed disabled:opacity-40"
           >
             <TfiAngleRight className="size-4" />

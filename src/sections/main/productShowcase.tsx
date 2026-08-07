@@ -40,8 +40,9 @@ export default function ProductShowcase({productList}:{productList:HomeType.Prod
           <div className="grid grid-cols-1 lg:grid-cols-12">
             <div className="lg:col-span-3">
               <ProductShowcaseInfoCard
+              
                 title={productList.title}
-                subtitle={productList.subTitle}
+                subTitle={productList.subTitle}
                 description={productList.description}
                 onNext={handleNextSlide}
                 onPrevious={handlePreviousSlide}

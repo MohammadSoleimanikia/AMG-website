@@ -7,7 +7,6 @@ export default function NotificationButton() {
     <IconButton
       component={LinkComponent}
       href="/notifications"
-      aria-label="اعلان‌ها"
       size="small"
       className="flex-shrink-0"
     >

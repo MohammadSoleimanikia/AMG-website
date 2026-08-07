@@ -75,7 +75,7 @@ export default function TopHeader({headerData}:{headerData:HeaderData}) {
           {/* logo and search */}
           <div className="flex h-full flex-1 items-center justify-between gap-6 xl:justify-start">
             {/* logo */}
-            <LinkComponent href="/" aria-label="صفحه اصلی" className="h-full py-2">
+            <LinkComponent href="/"  className="h-full py-2">
               <Image
                 visibleByDefault
                 src={headerData.siteData.logo}

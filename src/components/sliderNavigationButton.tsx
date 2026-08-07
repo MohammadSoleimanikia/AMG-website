@@ -19,7 +19,6 @@ export default function SliderNavigationButton({
       <ButtonBase
         type="button"
         onClick={handleNextSlide}
-        aria-label="اسلاید قبلی"
         className="flex size-9 items-center justify-center rounded-full bg-common-white text-text-primary"
       >
         <FaAngleLeft className="size-4" />
@@ -27,7 +26,6 @@ export default function SliderNavigationButton({
       <ButtonBase
         type="button"
         onClick={handlePrevSlide}
-        aria-label="اسلاید بعدی"
         className="flex size-9 items-center justify-center rounded-full bg-common-white text-text-primary"
       >
         <FaAngleRight className="size-4" />

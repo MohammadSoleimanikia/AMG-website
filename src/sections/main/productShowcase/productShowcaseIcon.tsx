@@ -12,7 +12,6 @@ export default function ProductShowcaseIcon({
       fill="currentColor"
       fillRule="evenodd"
       className={className}
-      aria-hidden="true"
     >
       <path
         transform="translate(144 113.98)"

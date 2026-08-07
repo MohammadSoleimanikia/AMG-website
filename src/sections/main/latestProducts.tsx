@@ -8,7 +8,7 @@ import { useRef } from 'react';
 import { CiSquareMore } from 'react-icons/ci';
 import type { Swiper as SwiperType } from 'swiper';
 import { HomeType } from '@/_types/_home';
-import ProductCollectionInfoCard from './productCollection/productCollectionInfoCard';
+import LatestProductInfoCard from './latestProducts/productInfoCard';
 import { TOP_MARGIN } from '@/utils/layout';
 
 type LatestProductsSectionProps = {
@@ -70,7 +70,7 @@ export default function ProductCollectionSection({ data }: LatestProductsSection
       </div>
 
       <div className="flex items-stretch gap-[1.875rem]">
-        <ProductCollectionInfoCard description={data.description} image={data.image} />
+        <LatestProductInfoCard title={data.title} description={data.description} image={data.image} />
 
         <div className="min-w-0 flex-1 lg:w-3/4 xl:w-4/5">
           <NewestProductsSlider

@@ -22,7 +22,6 @@ export default function HeroGrid({ images }:{images:HomeType.GroupParent[]} ) {
           <LinkComponent
             key={image.enTitle}
             href="/products"
-            aria-label={image.title}
             className="2xl:min-h-[233px] block size-full overflow-hidden rounded-xl"
           >
             <div className="block h-full w-full overflow-hidden leading-none [&>.wrapper]:size-full [&>.wrapper]:!bg-cover [&_img]:h-full [&_img]:w-full [&_img]:!rounded-xl [&_img]:object-contain">

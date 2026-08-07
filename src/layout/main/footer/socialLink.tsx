@@ -17,7 +17,6 @@ export default function SocialLink({
   return (
     <a
       href={link.link}
-      aria-label={link.enTitle}
       className="flex size-14 items-center justify-center rounded-full bg-background-default text-error-main"
     >
       <button className="inline-flex cursor-pointer select-none items-center justify-center rounded-full border-none !bg-background-default bg-warning-main p-2 font-[inherit] text-[1.5rem] !text-text-primary text-common-white transition-colors duration-200 ease-in-out hover:bg-background-default hover:text-text-secondary">

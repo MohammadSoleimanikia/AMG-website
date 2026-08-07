@@ -22,7 +22,7 @@ export default function BestCarCard({ car, selected = false }: BestCarCardProps)
       <Link
         href={href}
         className="group no-underline flex h-full w-[120px] flex-col items-center rounded-full py-5 child:mx-auto sm:w-[143px] xl:py-[30px]"
-        aria-label={`مشاهده محصولات خودروی ${car.title}`}
+        
       >
         <Image
           visibleByDefault

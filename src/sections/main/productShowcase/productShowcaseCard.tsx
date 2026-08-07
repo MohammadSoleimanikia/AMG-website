@@ -14,7 +14,6 @@ export default function ProductShowcaseCard({ product }: ProductShowcaseCardProp
       <LinkComponent
         href={product.categoryPath || ""}
         className="flex cursor-grab justify-center overflow-hidden rounded-[20px_20px_30px_30px] bg-background-paper p-3.5 sm:p-8"
-        aria-label={`مشاهده جزئیات`}
       >
         <Image
           visibleByDefault
@@ -66,7 +65,6 @@ export default function ProductShowcaseCard({ product }: ProductShowcaseCardProp
           <Tooltip title="مشاهده جزئیات" placement="top">
             <LinkComponent
               href={`/products/${product.en_name}`}
-              aria-label={`مشاهده جزئیات ${product.en_name}`}
               className=" rounded-full bg-warning-main  text-[1.5rem] text-common-white transition-colors duration-200 hover:bg-background-default hover:text-text-secondary focus-visible:bg-background-default focus-visible:text-text-secondary"
             >
               <div className='size-10 flex items-center justify-center'>

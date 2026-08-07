@@ -40,7 +40,6 @@ export default function NavContainer({ item }: NavContainerProps) {
                 disableRipple
                 onMouseEnter={() => setActiveCategory(category)}
                 onFocus={() => setActiveCategory(category)}
-                aria-pressed={isActive}
                 className={clsx(
                   'min-h-[64px] w-full justify-start gap-3 rounded-2xl px-4 py-3 text-right text-lg font-medium transition-all duration-200',
                   isActive
@@ -87,7 +86,6 @@ export default function NavContainer({ item }: NavContainerProps) {
                     color="inherit"
                     size="medium"
                     disableRipple
-                    aria-label={`مشاهده ${subCategory.faName}`}
                     className="w-full justify-start rounded-lg bg-transparent px-3 py-2 text-right font-medium text-text-primary transition-colors duration-200 hover:text-primary-main"
                   >
                     {subCategory.faName}
@@ -108,7 +106,6 @@ export default function NavContainer({ item }: NavContainerProps) {
                   variant="text"
                   color="inherit"
                   disableRipple
-                  aria-label={`مشاهده قطعات خودرو ${car.faName}`}
                   className="group/car flex min-w-0 flex-col gap-3 rounded-2xl bg-transparent text-text-primary transition-colors duration-200 hover:bg-transparent hover:text-primary-main"
                 >
                   {/* Car icon */}
