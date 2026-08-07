@@ -4,12 +4,10 @@ import type { NavBarChildItem, NavBarItem } from '@/_types/_header';
 
 import { Avatar, Button, Container } from '@mui/material';
 import { clsx } from 'clsx/lite';
-import LinkComponent from '@/components/linkComponent';
 import { useState } from 'react';
 import { FiGrid } from 'react-icons/fi';
 import { IoCarSportOutline } from 'react-icons/io5';
 import Link from 'next/link';
-import { API_BASE_URL } from '@/utils/config';
 
 type NavContainerProps = {
   navItem: NavBarItem;
@@ -84,18 +82,14 @@ export default function NavContainer({ navItem }: NavContainerProps) {
             <div className="flex h-full">
               <div className="flex w-[240px] flex-col gap-1">
                 {activeCategory?.children?.map((subChild) => (
-                  <Button
+                  <Link
                     key={subChild.id}
-                    component={LinkComponent}
                     href={subChild.path}
-                    variant="text"
                     color="inherit"
-                    size="medium"
-                    disableRipple
                     className="w-full justify-start rounded-lg bg-transparent px-3 py-2 text-right font-medium text-text-primary transition-colors duration-200 hover:text-primary-main"
                   >
                     {subChild.faName}
-                  </Button>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -105,13 +99,10 @@ export default function NavContainer({ navItem }: NavContainerProps) {
           {navItem.type === 'car' && (
             <div className="grid w-full grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-9">
               {activeCategory?.children?.map((car) => (
-                <Button
+                <Link
                   key={car.id}
-                  component={LinkComponent}
                   href={car.path}
-                  variant="text"
                   color="inherit"
-                  disableRipple
                   className="group/car flex min-w-0 flex-col gap-3 rounded-2xl bg-transparent text-text-primary transition-colors duration-200 hover:bg-transparent hover:text-primary-main"
                 >
                   {/* Car icon */}
@@ -134,7 +125,7 @@ export default function NavContainer({ navItem }: NavContainerProps) {
                   <span className="w-full truncate text-center text-base font-medium">
                     {car.faName}
                   </span>
-                </Button>
+                </Link>
               ))}
             </div>
           )}
