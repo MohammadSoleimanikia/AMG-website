@@ -30,6 +30,9 @@ const nextConfig: NextConfig = {
       {
         protocol:'https',
         hostname:'files.epyc.ir'
+      },{
+        protocol:'https',
+        hostname:'amgplus.ir'
       }
     ],
   },

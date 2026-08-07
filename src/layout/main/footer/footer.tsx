@@ -16,10 +16,10 @@ import FooterMenu from './footerMenu';
 import SocialLink from './socialLink';
 
 const processItems = [
-  { id: 1, title: 'تیکت', icon: FiGrid },
-  { id: 2, title: 'سفارش کالا', icon: TbTruckDelivery },
-  { id: 3, title: 'ارسال رایگان', icon: MdOutlineSupportAgent },
-  { id: 4, title: 'پشتیبانی', icon: TbWorld },
+  { id: 1, title: 'تیکت', icon: "https://amgplus.ir/img/discussion.png" },
+  { id: 2, title: 'سفارش کالا', icon: "https://amgplus.ir/img/barcode.png" },
+  { id: 3, title: 'ارسال رایگان', icon: "https://amgplus.ir/img/truck.png" },
+  { id: 4, title: 'پشتیبانی', icon: "https://amgplus.ir/img/worker.png" },
 ];
 
 export default async function Footer() {
@@ -55,16 +55,18 @@ export default async function Footer() {
             </div>
 
             {/* below menu */}
-            <Paper
-              elevation={1}
-              className="mt-8 grid grid-cols-2 gap-4 rounded-2xl bg-common-white p-10 lg:grid-cols-4"
+            <div
+              className={clsx(
+                'mt-8 grid grid-cols-2 gap-4 rounded-2xl bg-common-white p-10',
+                'lg:grid-cols-4',
+              )}
             >
               {processItems.map((item) => {
                 const Icon = item.icon;
                 return (
                   <div key={item.id} className="text-center">
-                    <span className="mx-auto flex size-11 items-center justify-center rounded-2xl bg-primary-light text-primary-main">
-                      <Icon className="size-6" />
+                    <span className="mx-auto flex size-11 items-center justify-center rounded-2xl">
+                      <Image src={item.icon} className="size-full" />
                     </span>
                     <Typography variant="body1" className="mt-2 block">
                       {item.title}
@@ -72,16 +74,15 @@ export default async function Footer() {
                   </div>
                 );
               })}
-            </Paper>
+            </div>
           </Card>
 
           <div className="order-3 flex flex-col justify-center gap-4 xl:order-none xl:col-span-3 xl:justify-start">
-            
             {/* mail section */}
             <div className="flex items-center justify-center gap-3 text-sm text-text-primary xl:justify-end">
               <LinkComponent
                 className="pt-1 text-lg font-semibold"
-                href={`mailto:${footerData.data.email ? footerData.data.email : 'example@mail.com' }`}
+                href={`mailto:${footerData.data.email ? footerData.data.email : 'example@mail.com'}`}
               >
                 {footerData.data.email ? footerData.data.email : 'example@gmail.com'}
               </LinkComponent>
@@ -126,7 +127,7 @@ export default async function Footer() {
               <span className="size-9 min-w-9 rounded-full bg-primary-main p-2 text-common-white shadow-s5">
                 <IoLocationOutline className="size-full" />
               </span>
-              <p className="mt-0.5 text-lg">{footerData.data.address}</p>
+              <p className=" text-lg">{footerData.data.address}</p>
             </div>
 
             {/* social links */}
