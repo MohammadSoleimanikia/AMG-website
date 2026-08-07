@@ -14,6 +14,7 @@ import useIsMounted from '@/hooks/useIsMounted';
 import { TOP_MARGIN } from '@/utils/layout';
 import { HomeType } from '@/_types/_home';
 import { PRODUCTS } from '@/path';
+import BestCarSVG from './bestCar/bestCarSVG';
 
 export default function BestCars({bestCarData}:{bestCarData:HomeType.CategorySection}) {
   const isMounted = useIsMounted();
@@ -40,7 +41,7 @@ export default function BestCars({bestCarData}:{bestCarData:HomeType.CategorySec
   };
 
   return (
-    <div className={`relative overflow-hidden ${TOP_MARGIN}` }>
+    <div className={`relative overflow-hidden` }>
       <Container maxWidth="xxl" className="relative z-10">
         <section className="!m-0 my-[1.875rem] !mb-0 sm:my-[2.5rem] lg:my-[3.75rem]">
           <Card className="bg-transparent bg-widget">
@@ -94,21 +95,9 @@ export default function BestCars({bestCarData}:{bestCarData:HomeType.CategorySec
         </section>
       </Container>
       <div className="relative">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 1000 100"
-          preserveAspectRatio="none"
-          className="absolute -bottom-0"
-        >
-          <path
-            className="!fill-common-white"
-            d="M500,97C126.7,96.3,0.8,19.8,0,0v100l1000,0V1C1000,19.4,873.3,97.8,500,97z"
-          ></path>
-        </svg>
+            <BestCarSVG/>
       </div>
     </div>
   );
 }
-function useOnMount() {
-  throw new Error('Function not implemented.');
-}
+
