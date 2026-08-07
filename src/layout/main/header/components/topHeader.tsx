@@ -3,12 +3,12 @@
 import clsx from 'clsx/lite';
 import React, { useEffect, useState } from 'react';
 import Image from '@/components/image';
-import LinkComponent from '@/components/linkComponent';
 import NotificationButton from '@/layout/main/header/components/notificationButton';
 import RegisterButton from '@/layout/main/header/components/registerButton';
 import SearchInput from '@/layout/main/header/components/searchInput';
 import { Container, useScrollTrigger } from '@mui/material';
 import { HeaderData } from '@/_types/_header';
+import Link from 'next/link';
 type StableScrollTriggerOptions = {
   enterThreshold: number;
   exitThreshold: number;
@@ -75,7 +75,7 @@ export default function TopHeader({headerData}:{headerData:HeaderData}) {
           {/* logo and search */}
           <div className="flex h-full flex-1 items-center justify-between gap-6 xl:justify-start">
             {/* logo */}
-            <LinkComponent href={headerData.siteData.url}  className="h-full py-2">
+            <Link href={headerData.siteData.url}  className="h-full py-2">
               <Image
                 visibleByDefault
                 src={headerData.siteData.logo}
@@ -84,7 +84,7 @@ export default function TopHeader({headerData}:{headerData:HeaderData}) {
                   'size-full [&_img]:object-contain [&_img]:transition-transform [&_img]:duration-300',
                 )}
               />
-            </LinkComponent>
+            </Link>
 
             <SearchInput />
           </div>
