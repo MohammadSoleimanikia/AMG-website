@@ -13,7 +13,8 @@ type NavButtonProps = {
 
 export default function NavButton({ navItem }: NavButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const hasChildren = navItem.children && navItem.children.length > 0;
+  // check null and length 
+  const hasChildren = (navItem.children?.length ?? 0)> 0;
 
   const handleMouseEnter = () => {
     if (hasChildren) {
@@ -47,8 +48,7 @@ export default function NavButton({ navItem }: NavButtonProps) {
           !hasChildren &&
             'bg-primary-light text-text-primary hover:bg-primary-main hover:text-common-white',
         )}
-        aria-haspopup={hasChildren ? 'menu' : undefined}
-        aria-expanded={hasChildren ? isOpen : undefined}
+        
       >
         <Typography variant="body1">{navItem.faName}</Typography>
       </Button>

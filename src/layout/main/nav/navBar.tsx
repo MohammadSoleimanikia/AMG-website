@@ -20,21 +20,20 @@ export default function NavBar({headerData}:{headerData:HeaderData}) {
         appear={false}
       >
         <nav
-          aria-label="منوی اصلی"
           className="h-navbar-mobile w-full bg-background-paper shadow-s0 xl:h-navbar z-[1000]"
         >
           <Container maxWidth="xxl" className="h-full">
             <div className="flex h-full items-center justify-between gap-4">
+              {/* desktop nav */}
               <div className="hidden min-w-0 flex-1 items-center gap-2 xl:flex">
                 {headerData.menu.map((menuItem)=>(
                   <NavButton key={menuItem.id} navItem={menuItem} />
                 )) }
-                
-                
               </div>
 
+              {/* mobile nav */}
               <div className="xl:hidden">
-                <MobileNavBurgerMenu />
+                <MobileNavBurgerMenu headerData={headerData}/>
               </div>
 
               <div className="hidden xl:block">
