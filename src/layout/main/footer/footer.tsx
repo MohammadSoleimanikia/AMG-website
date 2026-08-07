@@ -27,7 +27,7 @@ export default async function Footer() {
   if (!footerData.data) {
     return <p>مشکلی پیش آمده است</p>;
   }
-  
+
   return (
     <footer className={clsx(TOP_MARGIN, 'bg-background-paper pb-24 pt-24 xl:pb-0')}>
       <StoreFeatures features={footerData.data.features} />
@@ -76,21 +76,18 @@ export default async function Footer() {
           </Card>
 
           <div className="order-3 flex flex-col justify-center gap-4 xl:order-none xl:col-span-3 xl:justify-start">
+            
+            {/* mail section */}
             <div className="flex items-center justify-center gap-3 text-sm text-text-primary xl:justify-end">
-              {footerData.data.email && (<>
-                <LinkComponent
-                  className="pt-1 text-lg font-semibold"
-                  href={`mailto:${footerData.data.email}`}
-                >
-                  {footerData.data.email}
-                </LinkComponent>
-                <span className="flex size-14 items-center justify-center rounded-xl bg-background-default shadow-s3">
+              <LinkComponent
+                className="pt-1 text-lg font-semibold"
+                href={`mailto:${footerData.data.email ? footerData.data.email : 'example@mail.com' }`}
+              >
+                {footerData.data.email ? footerData.data.email : 'example@gmail.com'}
+              </LinkComponent>
+              <span className="flex size-14 items-center justify-center rounded-xl bg-background-default shadow-s3">
                 <HiOutlineMail className="size-[60px] rounded-2xl bg-background-default p-4" />
               </span>
-              </>
-              )}
-
-              
             </div>
 
             <div className="mt-5 flex items-center justify-center gap-4 xl:justify-end">
@@ -134,9 +131,9 @@ export default async function Footer() {
 
             {/* social links */}
             <div className="flex gap-3">
-              {footerData.data.socialMedias.map((link)=><SocialLink key={link.enTitle} link={link}/>)}
-              
-
+              {footerData.data.socialMedias.map((link) => (
+                <SocialLink key={link.enTitle} link={link} />
+              ))}
             </div>
           </div>
         </div>
@@ -147,12 +144,12 @@ export default async function Footer() {
             پیاده‌سازی توسط <span className="font-bold text-primary-main">وبتو</span>
           </p>
 
-          <LinkComponent href={'webeto.com'} className="flex items-center items-center gap-2">
-            <p><span className='text-primary-main font-semibold'>
-              WEBETO
-              </span>.co</p>
+          <LinkComponent href={'webeto.com'} className="flex items-center gap-2">
+            <p>
+              <span className="font-semibold text-primary-main">WEBETO</span>.co
+            </p>
             <span className="flex size-9 items-center justify-center rounded-full bg-primary-main text-common-white">
-              <TbWorld className='size-7'/>
+              <TbWorld className="size-7" />
             </span>
           </LinkComponent>
         </div>
