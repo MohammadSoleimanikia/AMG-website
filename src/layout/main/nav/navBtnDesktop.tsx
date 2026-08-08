@@ -6,16 +6,25 @@ import { Button, Typography } from '@mui/material';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { normalizePath } from '@/utils/normalizePath';
 
 type NavButtonProps = {
   navItem: NavBarItem;
 };
 
 export default function NavButtonDesktop({ navItem }: NavButtonProps) {
+  const pathname = usePathname();
+  const currentPath = normalizePath(pathname);
+  const itemPath = normalizePath(navItem.path);
   const [isOpen, setIsOpen] = useState(false);
   // check null and length
   const hasChildren = (navItem.children?.length ?? 0) > 0;
-
+  const isActive =
+    Boolean(itemPath) &&
+    (itemPath === '/'
+      ? currentPath === '/'
+      : currentPath === itemPath || currentPath.startsWith(`${itemPath}/`));
   const handleMouseEnter = () => {
     if (hasChildren) {
       setIsOpen(true);
@@ -33,19 +42,18 @@ export default function NavButtonDesktop({ navItem }: NavButtonProps) {
       onMouseLeave={handleMouseLeave}
     >
       <Button
-        component={navItem.path ? Link: "div"}
+        component={navItem.path ? Link : 'div'}
         href={navItem.path ? navItem.path : undefined}
         size="small"
         variant={hasChildren ? 'text' : 'contained'}
         className={clsx(
           'h-9 !rounded-xl px-4 font-medium transition-all duration-200',
-          hasChildren &&
-            !isOpen &&
+          
+            !isOpen && !isActive &&
             'bg-transparent text-text-primary hover:bg-primary-main hover:text-common-white',
-          hasChildren &&
             isOpen &&
             'bg-primary-main text-common-white shadow-s5 hover:bg-primary-main hover:text-common-white',
-          !hasChildren &&
+          isActive &&
             'bg-primary-light text-text-primary hover:bg-primary-main hover:text-common-white',
         )}
       >

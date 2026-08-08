@@ -18,8 +18,13 @@ import { TfiAngleDown, TfiAngleLeft } from 'react-icons/tfi';
 import TopSideBarSectionMobile from './topSideBarSectionMobile';
 import Link from 'next/link';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { normalizePath } from '@/utils/normalizePath';
 
 export default function MobileNavBurgerMenu({ headerData }: { headerData: HeaderData }) {
+  const pathname = usePathname();
+  const currentPath = normalizePath(pathname);
+
   const [open, setOpen] = useState(false);
   const [openedNavItemId, setOpenedNavItemId] = useState<number | null>(null);
   const [openedChildItemId, setOpenedChildItemId] = useState<number | null>(null);
@@ -74,25 +79,27 @@ export default function MobileNavBurgerMenu({ headerData }: { headerData: Header
         }}
       >
         <div className="w-full" role="navigation">
-
           <TopSideBarSectionMobile />
 
           {/*menu*/}
           <List disablePadding>
-
             {/* lvl 1 */}
             {headerData.menu.map((navItem) => {
+              const itemPath = normalizePath(navItem.path);
               const hasChildren = (navItem.children?.length ?? 0) > 0;
               const isNavItemOpen = openedNavItemId === navItem.id;
-
+              const isActive =
+                Boolean(itemPath) &&
+                (itemPath === '/'
+                  ? currentPath === '/'
+                  : currentPath === itemPath || currentPath.startsWith(`${itemPath}/`));
               return (
-                
                 <div key={navItem.id}>
                   <ListItem
                     disablePadding
                     className={clsx(
                       'flex w-full items-stretch',
-                      isNavItemOpen && 'bg-background-default',
+                      isNavItemOpen ||isActive && 'bg-background-default',
                     )}
                   >
                     <ListItemButton
@@ -157,7 +164,7 @@ export default function MobileNavBurgerMenu({ headerData }: { headerData: Header
                                 ) : null}
                               </ListItem>
 
-                                {/* lvl 3 */}
+                              {/* lvl 3 */}
                               {hasChildItems ? (
                                 <Collapse in={isChildItemOpen} timeout="auto">
                                   <List disablePadding>
@@ -190,7 +197,6 @@ export default function MobileNavBurgerMenu({ headerData }: { headerData: Header
               );
             })}
           </List>
-
         </div>
       </Drawer>
     </div>
