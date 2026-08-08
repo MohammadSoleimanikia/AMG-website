@@ -1,30 +1,40 @@
-'use client'; // Error components must be Client Components
-import { useEffect } from 'react';
+import { Button, Typography } from '@mui/material';
+import Link from 'next/link';
+import clsx from 'clsx';
 
-export default function ErrorComponent({
-  error,
-  reset,
-}: {
-  error?: Error & { digest?: string };
-  reset?: () => void;
-}) {
-  useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
-  }, [error]);
+type GeneralErrorProps = {
+  title?: string;
+  message?: string;
+  className?: string;
+  showHomeButton?: boolean;
+};
 
+export default function GeneralError({
+  title = 'مشکلی پیش آمده است',
+  message = 'لطفاً چند لحظه دیگر دوباره تلاش کنید.',
+  className,
+  showHomeButton = true,
+}: GeneralErrorProps) {
   return (
-    <div>
-      <h2>مشکلی پیش آمده است !!</h2>
-      <p></p>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset && reset()
-        }
-      >
-        مجددا تلاش کنید
-      </button>
+    <div
+      className={clsx(
+        'flex min-h-[300px] w-full flex-col items-center justify-center gap-4 rounded-3xl bg-background-paper px-5 py-10 text-center',
+        className,
+      )}
+    >
+      <Typography variant="h5" className="text-error-main">
+        {title}
+      </Typography>
+
+      <Typography variant="body1" className="max-w-[500px] text-text-secondary">
+        {message}
+      </Typography>
+
+      {showHomeButton ? (
+        <Button component={Link} href="/" variant="contained">
+          بازگشت به خانه
+        </Button>
+      ) : null}
     </div>
   );
 }
