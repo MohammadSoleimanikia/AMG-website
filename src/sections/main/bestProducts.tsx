@@ -1,8 +1,7 @@
 'use client';
 import React, { useRef } from 'react';
-import { Card, Container, Typography } from '@mui/material';
+import { Card, Typography } from '@mui/material';
 import { clsx } from 'clsx';
-import { TOP_MARGIN } from '@/utils/layout';
 import { type Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -19,7 +18,7 @@ export default function BestProducts({
   type = 'primary',
   discountData,
 }: DiscountCardProps) {
-  const isMounted =useIsMounted()
+  const isMounted = useIsMounted();
   const swiperRef = useRef<SwiperType | null>(null);
   const handleNextSlide = () => {
     const swiper = swiperRef.current;
@@ -40,7 +39,7 @@ export default function BestProducts({
     swiper.slidePrev();
   };
   return (
-    <div className={clsx('relative lg:flex z-50 ')}>
+    <div className={clsx('relative z-50 lg:flex')}>
       {/* info card */}
       <div
         className={clsx(
@@ -175,11 +174,18 @@ export default function BestProducts({
             </Swiper>
           ) : (
             <div dir="rtl" className="relative w-full overflow-hidden">
-              <div className="flex w-full flex-nowrap gap-[10px] min-[576px]:gap-4 min-[990px]:gap-5 min-[1200px]:gap-6">
+              <div className="flex w-full flex-nowrap gap-5">
                 {discountData.products.map((product) => (
                   <div
-                    key={`${product.id}`}
-                    className="min-w-0 flex-none basis-[calc((100%-10px)/2)] min-[576px]:basis-[calc((100%-32px)/3)] min-[990px]:basis-[calc((100%-60px)/4)] min-[1500]:basis-[calc((100%-60px)/5)] [&>*]:h-full"
+                    key={product.id}
+                    className={clsx(
+                      'min-w-0 flex-none',
+                      'basis-[calc((100%_-_20px)_/_2)]',
+                      'sm:basis-[calc((100%_-_40px)_/_3)]',
+                      'lg:basis-[calc((100%_-_60px)_/_4)]',
+                      'xxl:basis-[calc((100%_-_80px)_/_5)]',
+                      '[&>*]:h-full',
+                    )}
                   >
                     <DiscountCard type={type} product={product} />
                   </div>

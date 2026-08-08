@@ -18,15 +18,24 @@ export default function NewestProductsSlider({
 }: ProductCarouselProps) {
   const isMounted = useIsMounted();
 
-  if (!isMounted) {
+ if (!isMounted) {
     return (
-      <SwiperSkeleton
-        count={4}
-        className="h-full auto-cols-[calc((100%-12px)/2)] md:auto-cols-[calc((100%-40px)/3)] lg:auto-cols-[calc((100%-60px)/4)]"
-        
-      />
+      // skeleton
+      <div dir="rtl" className="relative w-full overflow-hidden">
+        <div className="flex w-full flex-nowrap gap-[12px] sm:gap-5 md:gap-5 xl:gap-[30px]">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="min-w-0 flex-none basis-[calc((100%_-_12px)_/_2)] sm:basis-[calc((100%_-_20px)_/_2)] md:basis-[calc((100%_-_40px)_/_3)] xl:basis-[calc((100%_-_90px)_/_4)] [&>*]:h-full"
+            >
+              <ProductCard product={product} />
+            </div>
+          ))}
+        </div>
+      </div>
     );
   }
+
 
   if (!products.length) {
     return null;
