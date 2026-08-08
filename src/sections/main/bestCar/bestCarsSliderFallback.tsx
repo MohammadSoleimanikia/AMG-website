@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx/lite';
 import BestCarCard from './bestCarCard';
 import { HomeType } from '@/_types/_home';
 
@@ -34,7 +35,14 @@ export default function BestCarsSliderFallback({
         {orderedCars.map(({ car, originalIndex }) => (
           <div
             key={`${car.title}-${originalIndex}`}
-            className="min-w-0 flex-none basis-[calc((100%-10px)/2)] min-[576px]:basis-[calc((100%-32px)/3)] min-[990px]:basis-[calc((100%-60px)/4)] min-[1200px]:basis-[calc((100%-96px)/5)] [&>*]:h-full"
+            className={clsx(
+              'min-w-0 flex-none',
+              'basis-[calc((100%_-_10px)_/_2)]',
+              'sm:basis-[calc((100%_-_32px)_/_3)]',
+              'lg:basis-[calc((100%_-_60px)_/_4)]',
+              'xl:basis-[calc((100%_-_96px)_/_5)]',
+              '[&>*]:h-full',
+            )}
           >
             <BestCarCard car={car} selected={originalIndex === selectedItem} />
           </div>
