@@ -7,7 +7,7 @@ export async function globalFetch<T>(
 ): Promise<BaseResponse<T>> {
   try {
     let response = await fetch(`${API_BASE_URL}${endPoint}`, {
-      next: { revalidate: restProps?.next?.revalidate || 60},
+      next: { revalidate: restProps?.next?.revalidate || 60 },
       cache: 'force-cache',
       ...restProps,
     });
@@ -15,12 +15,11 @@ export async function globalFetch<T>(
 
     // 401
     if (!response.ok) {
-      console.error('response is not ok');
-      throw {
-        message: data.message,
-        statusCode: data.statusCode || response.status ,
+      return {
+        message: data?.message || 'در دریافت اطلاعات مشکلی پیش آمده است.',
+        statusCode: data?.statusCode || response.status,
         data: null,
-        errors: data.errors || "",
+        errors: data?.errors || '',
         success: false,
       };
     }
@@ -53,6 +52,12 @@ export async function globalFetch<T>(
       message: 'OK',
     };
   } catch (error) {
-    throw new Error();
+    return {
+      data: null,
+      statusCode: 500,
+      errors: error,
+      success: false,
+      message: 'ارتباط با سرور برقرار نشد.',
+    };
   }
 }
