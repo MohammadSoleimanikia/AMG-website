@@ -1,22 +1,22 @@
 'use client';
 
-import MoreProductButton from '@/components/moreProductButton';
-import SliderNavigationButton from '@/components/sliderNavigationButton';
-
 
 import { useRef } from 'react';
-import { CiSquareMore } from 'react-icons/ci';
 import type { Swiper as SwiperType } from 'swiper';
 import BestCarsSlider from './bestCar/bestCarsSlider';
-import { Card, Container, Typography } from '@mui/material';
+import { Card, Container } from '@mui/material';
 import BestCarsSliderFallback from './bestCar/bestCarsSliderFallback';
 import useIsMounted from '@/hooks/useIsMounted';
-import { TOP_MARGIN } from '@/utils/layout';
 import { HomeType } from '@/_types/_home';
 import { PRODUCTS } from '@/path';
 import BestCarSVG from './bestCar/bestCarSVG';
+import TopSliderSection from '@/components/topSliderSection';
 
-export default function BestCars({bestCarData}:{bestCarData:HomeType.CategorySection}) {
+export default function BestCars({
+  bestCarData,
+}: {
+  bestCarData: HomeType.CategorySection;
+}) {
   const isMounted = useIsMounted();
   const swiperRef = useRef<SwiperType | null>(null);
 
@@ -41,41 +41,18 @@ export default function BestCars({bestCarData}:{bestCarData:HomeType.CategorySec
   };
 
   return (
-    <div className={`relative overflow-hidden` }>
+    <div className={`relative overflow-hidden`}>
       <Container maxWidth="xxl" className="relative z-10">
         <section className="!m-0 my-[1.875rem] !mb-0 sm:my-[2.5rem] lg:my-[3.75rem]">
           <Card className="bg-transparent bg-widget">
             {/* top section of */}
-            <div className="mb-[45px] flex w-full flex-col items-center justify-between gap-4 sm:flex-row">
-              <div className="flex flex-col items-center gap-4 sm:flex-row">
-                <div className="size-[50px] xl:size-[60px] [&>svg]:size-full [&>svg]:rounded-[10px] [&>svg]:bg-common-white [&>svg]:p-1 md:[&>svg]:p-2.5 xl:[&>svg]:p-4">
-                  <CiSquareMore className="!bg-background-default" />
-                </div>
-
-                <div className="text-center md:text-start">
-                  <Typography variant="h5" className="text-[1.3rem]">
-                    <span className="text-error-main">
-                      {bestCarData.title.split(" ")[0]}
-                    </span>{' '}
-                    {bestCarData.title.split(" ").slice(1).join(" ")}
-                  </Typography>
-
-                  <Typography variant="body2" className="pt-2 md:pt-1">
-                    {bestCarData.subTitle}
-                  </Typography>
-                </div>
-              </div>
-
-              <div className="lg:hidden">
-                <div className="flex items-center gap-6 sm:w-fit sm:flex-row md:gap-2">
-                  <MoreProductButton link={PRODUCTS} />
-                  <SliderNavigationButton
-                    handleNextSlide={handleNextSlide}
-                    handlePrevSlide={handlePrevSlide}
-                  />
-                </div>
-              </div>
-            </div>
+            <TopSliderSection
+              title={bestCarData.title}
+              subTitle={bestCarData.subTitle}
+              link={PRODUCTS}
+              handleNextSlide={handleNextSlide}
+              handlePrevSlide={handlePrevSlide}
+            />
 
             {isMounted ? (
               <BestCarsSlider
@@ -86,18 +63,14 @@ export default function BestCars({bestCarData}:{bestCarData:HomeType.CategorySec
                 }}
               />
             ) : (
-              <BestCarsSliderFallback
-                cars={bestCarData.categories}
-                selectedItem={0}
-              />
+              <BestCarsSliderFallback cars={bestCarData.categories} selectedItem={0} />
             )}
           </Card>
         </section>
       </Container>
       <div className="relative">
-            <BestCarSVG/>
+        <BestCarSVG />
       </div>
     </div>
   );
 }
-
