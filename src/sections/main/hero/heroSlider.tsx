@@ -55,7 +55,7 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
           pauseOnMouseEnter: true,
         }}
         onSlideChange={(swiper) => {
-          setActive(swiper.activeIndex);
+          setActive(swiper.realIndex);
         }}
 
         onSwiper={(swiper) => {
@@ -122,8 +122,8 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
               images.map((item, index) => (
                 <div
                   className={clsx(
-                    'size-14 overflow-hidden rounded-full transition-all duration-300',
-                    active === index && 'border-4 border-solid border-custom-1',
+                    'size-14 overflow-hidden rounded-full  transition-all duration-300',
+                    active === index ? 'border-4 box-border border-solid border-custom-1':'border-4 border-solid border-transparent',
                   )}
                   key={item.image}
                   onClick={() => {
