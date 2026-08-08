@@ -21,7 +21,7 @@ export default function SectionWrapper({
       {container ? (
         <Container
           maxWidth="xxl"
-          disableGutters
+          
           className={clsx('w-full', containerClassName)}
         >
           {children}
