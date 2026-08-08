@@ -12,13 +12,13 @@ import SectionWrapper from '@/components/SectionWrapper';
 import HeroSlider from './hero/heroSlider';
 import LatestProductsSVG from './linkedBanners/latestProductsSVG';
 import BestProductsSVG from './bestProducts/bestProductsSVG';
+import GeneralError from '@/components/errorComponent';
 
 export default async function MainHome() {
   const homeData = await fetchHomeData();
-  if (!homeData.data) {
-    return <p>مشکلی پیش آمده است</p>;
+  if (!homeData.success || !homeData.data) {
+    return <GeneralError message={homeData.message} />;
   }
-
   return (
     <div className="overflow-hidden">
       <SectionWrapper>
@@ -62,7 +62,7 @@ export default async function MainHome() {
 
       <SectionWrapper className="relative bg-common-white">
         <BestProducts discountData={homeData.data.bestProduct} type="primary" />
-        <BestProductsSVG/>
+        <BestProductsSVG />
       </SectionWrapper>
     </div>
   );
