@@ -1,87 +1,88 @@
 'use client';
 import { HiOutlineDevicePhoneMobile } from 'react-icons/hi2';
-import {
-  ButtonBase,
-  FormHelperText,
-  InputAdornment,
-  Snackbar,
-  TextField,
-} from '@mui/material';
+import { ButtonBase, InputAdornment } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
 import clsx from 'clsx';
 import { LoginFormType, loginSchema } from '@/validattion/loginSchema';
-import { loginService } from '@/services/loginService';
-import RHFTextField from '@/components/RHFTextField';
+import RHFTextField from '@/components/RHF/RHFTextField';
+import FormProvider from '@/components/RHF/formProvider';
+import useSWRMutation from 'swr/mutation';
+import { LOGIN } from '@/services';
+import { sendRequest } from '@/utils/sendRequest';
+import { Dispatch, SetStateAction } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { apiClient } from '@/utils/apiClient';
 
-export default function LoginForm() {
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
+type LoginProps = {
+  setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
+};
+export default function LoginForm({ setActiveStep }: LoginProps) {
+  const { trigger, isMutating } = useSWRMutation(`${LOGIN}`, sendRequest);
 
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<LoginFormType>({
+  const methods = useForm<LoginFormType>({
     defaultValues: { phone: '' },
     mode: 'onSubmit',
     resolver: yupResolver(loginSchema),
   });
 
   const submitHandler = async (data: LoginFormType) => {
-    console.log(typeof data.phone)
-    const response = await loginService(data);
-
-    if (!response.success) {
-      setSnackbarMessage(response.message || 'خطایی رخ داده است');
-      setSnackbarOpen(true);
-    } else {
-      setSnackbarMessage('ورود با موفقیت انجام شد');
-      setSnackbarOpen(true);
+    try {
+      await apiClient.post('/login', data);
+      toast.success('کد اعتبارسنجی به شما ارسال شد');
+      setActiveStep('otp')
+      
+    } catch (error: any) {
+      console.log(error)
     }
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbarOpen(false);
   };
 
   return (
     <>
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        message={snackbarMessage}
+      <Toaster
+        position="bottom-center"
+        reverseOrder={false}
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#343A40',
+            color: '#fff',
+          },
+          icon: '✅',
+        }}
       />
+      <FormProvider methods={methods} handleSubmit={methods.handleSubmit(submitHandler)}>
+        <div className="flex w-full flex-col items-center justify-center">
+          <RHFTextField
+            name="phone"
+            placeholder="شماره تلفن"
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <HiOutlineDevicePhoneMobile className="size-6" />
+                  </InputAdornment>
+                ),
+              },
+            }}
+          />
 
-      <form
-        onSubmit={handleSubmit(submitHandler)}
-        className="flex w-full flex-col items-center justify-center"
-      >
-        <RHFTextField
-          control={control}
-          name="phone"
-          errors={errors}
-          placeholder="شماره تلفن"
-          icon={HiOutlineDevicePhoneMobile}
-        />
-      
-        <div className="mt-6 flex w-full items-center justify-between">
-          <ButtonBase
-            className={clsx(
-              'w-full rounded-md bg-primary-lighter p-4',
-              'font-medium text-primary-main',
-              'hover:bg-primary-light',
-            )}
-            type="submit"
-          >
-            ورود
-          </ButtonBase>
+          <div className="mt-6 flex w-full items-center justify-between">
+            <ButtonBase
+              className={clsx(
+                'w-full rounded-md bg-primary-lighter p-4',
+                'font-medium text-primary-main',
+                'hover:bg-primary-light',
+                isMutating && 'cursor-not-allowed opacity-50',
+              )}
+              type="submit"
+              disabled={isMutating}
+            >
+              {isMutating ? 'در حال ارسال...' : 'ورود'}
+            </ButtonBase>
+          </div>
         </div>
-      </form>
+      </FormProvider>
     </>
   );
 }

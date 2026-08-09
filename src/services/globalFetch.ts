@@ -44,7 +44,7 @@ export async function globalFetch<T>(
       };
     }
 
-    return await {
+    return  {
       data: data.data,
       statusCode: 200,
       errors: null,

@@ -20,25 +20,38 @@ export default function TopFormSelector({
     >
       {/* login and signup button  */}
       <div className="flex items-center rounded-full bg-common-white p-2">
-        {/* {activeStep==="otp" ? } */}
-        <div
-          onClick={() => setActiveStep('login')}
-          className={clsx(
-            'rounded-full px-5 py-3 hover:cursor-pointer',
-            activeStep == 'login' && 'bg-common-black text-common-white',
-          )}
-        >
-          ورود
-        </div>
-        <div
-          onClick={() => setActiveStep('signUp')}
-          className={clsx(
-            'rounded-full px-5 py-3 hover:cursor-pointer',
-            activeStep == 'signUp' && 'bg-common-black text-common-white',
-          )}
-        >
-          ثبت نام
-        </div>
+        {activeStep === 'otp' ? (
+          <div
+            onClick={() => setActiveStep('login')}
+            className={clsx(
+              'rounded-full px-5 py-3 hover:cursor-pointer',
+              'bg-common-black text-common-white',
+            )}
+          >
+            کد فعالسازی
+          </div>
+        ) : (
+          <>
+            <div
+              onClick={() => setActiveStep('login')}
+              className={clsx(
+                'rounded-full px-5 py-3 hover:cursor-pointer',
+                activeStep == 'login' && 'bg-common-black text-common-white',
+              )}
+            >
+              ورود
+            </div>
+            <div
+              onClick={() => setActiveStep('signUp')}
+              className={clsx(
+                'rounded-full px-5 py-3 hover:cursor-pointer',
+                activeStep == 'signUp' && 'bg-common-black text-common-white',
+              )}
+            >
+              ثبت نام
+            </div>
+          </>
+        )}
       </div>
 
       {/* icon */}
