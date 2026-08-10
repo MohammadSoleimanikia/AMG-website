@@ -6,7 +6,10 @@ import { useState } from 'react';
 import OtpForm from './otpForm';
 
 export default function LoginPage() {
+  const [phone, setPhone] = useState('');
+
   const [activeStep, setActiveStep] = useState<'login' | 'signUp' | 'otp'>('login');
+  if (activeStep === 'otp') return <OtpForm setActiveStep={setActiveStep} />;
   return (
     <div className="mx-2 w-full max-w-[400px] rounded-3xl bg-background-paper p-6 shadow-s18">
       {/* head section of form */}
@@ -15,11 +18,9 @@ export default function LoginPage() {
       {/* form */}
       <div className="mb-6 mt-14 px-6">
         {activeStep === 'login' ? (
-          <LoginForm setActiveStep={setActiveStep} />
-        ) : activeStep === 'signUp' ? (
-          <SignUpForm setActiveStep={setActiveStep} />
+          <LoginForm setPhone={setPhone} setActiveStep={setActiveStep} />
         ) : (
-          <OtpForm/>
+          <SignUpForm setActiveStep={setActiveStep} />
         )}
       </div>
     </div>

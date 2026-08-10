@@ -11,7 +11,7 @@ import { Controller } from 'react-hook-form';
 import clsx from 'clsx';
 import { CiCreditCard1 } from 'react-icons/ci';
 import RHFTextField from '@/components/RHF/RHFTextField';
-import { SignUpFormType, signUpSchema } from '@/validattion/signUpSchema';
+import { SignUpFormType, signUpSchema } from '@/validation/signUpSchema';
 import { registerService } from '@/services/registerService';
 import { yupResolver } from '@hookform/resolvers/yup';
 import FormProvider from '@/components/RHF/formProvider';
@@ -21,7 +21,7 @@ type SignUpProps = {
   setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
 };
 
-export default function SignUpForm({setActiveStep}:SignUpProps) {
+export default function SignUpForm({ setActiveStep }: SignUpProps) {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
 
@@ -36,7 +36,6 @@ export default function SignUpForm({setActiveStep}:SignUpProps) {
     mode: 'onSubmit',
     resolver: yupResolver(signUpSchema),
   });
-
 
   const submitHandler = async (data: SignUpFormType) => {
     const response = await registerService(data);
@@ -82,7 +81,6 @@ export default function SignUpForm({setActiveStep}:SignUpProps) {
               },
             }}
           />
-         
 
           {/* mobile number */}
           <RHFTextField
@@ -113,7 +111,6 @@ export default function SignUpForm({setActiveStep}:SignUpProps) {
               },
             }}
           />
-          
 
           {/* select gender */}
           <div className="w-full">

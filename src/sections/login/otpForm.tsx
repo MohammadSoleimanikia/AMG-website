@@ -1,89 +1,72 @@
 'use client';
-import { HiOutlineDevicePhoneMobile } from 'react-icons/hi2';
-import { ButtonBase, InputAdornment } from '@mui/material';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useForm } from 'react-hook-form';
+
 import clsx from 'clsx';
-import { LoginFormType, loginSchema } from '@/validattion/loginSchema';
-import RHFTextField from '@/components/RHF/RHFTextField';
+import OtpTimer from './otpTimer';
+import OTPInput from './otpInput';
 import FormProvider from '@/components/RHF/formProvider';
-import useSWRMutation from 'swr/mutation';
-import { LOGIN } from '@/services';
-import { sendRequest } from '@/utils/sendRequest';
-import { Dispatch, SetStateAction } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { apiClient } from '@/utils/apiClient';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { OtpRequest, otpSchema } from '@/validation/otpSchema';
 
-type LoginProps = {
-  setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
+type OtpFormProps = {
+  setActiveStep: (step: 'login' | 'signUp' | 'otp') => void;
 };
-export default function OtpForm({ setActiveStep }: LoginProps) {
-  // 
-  const { trigger, isMutating } = useSWRMutation(`${LOGIN}`, sendRequest);
 
-  const methods = useForm<LoginFormType>({
+export default function OtpForm({ setActiveStep }: OtpFormProps) {
+  const methods = useForm<OtpRequest>({
     defaultValues: { phone: '' },
     mode: 'onSubmit',
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(otpSchema),
   });
 
-  const submitHandler = async (data: LoginFormType) => {
-    try {
-      await apiClient.post('/login', data);
-      toast.success('کد اعتبارسنجی به شما ارسال شد');
-      setActiveStep('otp')
-      
-    } catch (error: any) {
-      console.log(error)
+  const submitHandler = async (data: OtpRequest) => {
+    // add swr
+    // const response = await trigger(data);
+    // if fail
+    if (!response.success) {
     }
+    // if success
   };
-
   return (
-    <>
-      <Toaster
-        position="bottom-center"
-        reverseOrder={false}
-        toastOptions={{
-          duration: 4000,
-          style: {
-            background: '#343A40',
-            color: '#fff',
-          },
-          icon: '✅',
-        }}
-      />
-      <FormProvider methods={methods} handleSubmit={methods.handleSubmit(submitHandler)}>
-        <div className="flex w-full flex-col items-center justify-center">
-          <RHFTextField
-            name="phone"
-            placeholder="شماره تلفن"
-            slotProps={{
-              input: {
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <HiOutlineDevicePhoneMobile className="size-6" />
-                  </InputAdornment>
-                ),
-              },
-            }}
-          />
-
-          <div className="mt-6 flex w-full items-center justify-between">
-            <ButtonBase
-              className={clsx(
-                'w-full rounded-md bg-primary-lighter p-4',
-                'font-medium text-primary-main',
-                'hover:bg-primary-light',
-                isMutating && 'cursor-not-allowed opacity-50',
-              )}
-              type="submit"
-              disabled={isMutating}
-            >
-              {isMutating ? 'در حال ارسال...' : 'ورود'}
-            </ButtonBase>
+    <div className="mx-2 w-full max-w-[400px] rounded-3xl bg-background-paper p-6 shadow-s18">
+      {/* head section of form */}
+      <div
+        className={clsx(
+          'relative flex min-h-[140px] w-full flex-col items-center',
+          'bg-gradient-to-r from-[#6ee2e0] to-[#5257e5] p-6 pb-[94px] shadow-s14',
+          'rounded-b-[100%] rounded-t-[90px]',
+        )}
+      >
+        <div className="flex items-center rounded-full bg-common-white p-2">
+          <div
+            className={clsx(
+              'rounded-full px-5 py-3 hover:cursor-pointer',
+              'bg-common-black text-common-white',
+            )}
+          >
+            کد فعالسازی
           </div>
         </div>
-      </FormProvider>
-    </>
+
+        {/* timer */}
+        <div
+          className={clsx(
+            'size-20 rounded-full bg-[#fff] text-grey-600 opacity-80',
+            'absolute bottom-0 translate-y-1/4',
+            'flex items-center justify-center',
+          )}
+        >
+          <OtpTimer initialTime={120} onComplete={() => setActiveStep('login')} />
+        </div>
+      </div>
+      <div className="mb-6 mt-14 px-6">
+        <FormProvider
+          methods={methods}
+          handleSubmit={methods.handleSubmit(submitHandler)}
+        >
+          <OTPInput />
+        </FormProvider>
+      </div>
+    </div>
   );
 }

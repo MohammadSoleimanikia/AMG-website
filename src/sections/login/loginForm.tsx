@@ -4,37 +4,37 @@ import { ButtonBase, InputAdornment } from '@mui/material';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
-import { LoginFormType, loginSchema } from '@/validattion/loginSchema';
+import { type LoginRequest, loginSchema } from '@/validation/loginSchema';
 import RHFTextField from '@/components/RHF/RHFTextField';
 import FormProvider from '@/components/RHF/formProvider';
 import useSWRMutation from 'swr/mutation';
 import { LOGIN } from '@/services';
-import { sendRequest } from '@/utils/sendRequest';
 import { Dispatch, SetStateAction } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { apiClient } from '@/utils/apiClient';
+import { loginFetcher } from '@/services/loginFetcher';
 
 type LoginProps = {
+  setPhone: Dispatch<SetStateAction<string>>;
   setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
 };
-export default function LoginForm({ setActiveStep }: LoginProps) {
-  const { trigger, isMutating } = useSWRMutation(`${LOGIN}`, sendRequest);
+export default function LoginForm({ setActiveStep, setPhone }: LoginProps) {
+  const { trigger, isMutating } = useSWRMutation(LOGIN, loginFetcher);
 
-  const methods = useForm<LoginFormType>({
+  const methods = useForm<LoginRequest>({
     defaultValues: { phone: '' },
     mode: 'onSubmit',
     resolver: yupResolver(loginSchema),
   });
 
-  const submitHandler = async (data: LoginFormType) => {
-    try {
-      await apiClient.post('/login', data);
-      toast.success('کد اعتبارسنجی به شما ارسال شد');
-      setActiveStep('otp')
-      
-    } catch (error: any) {
-      console.log(error)
+  const submitHandler = async (data: LoginRequest) => {
+    const response = await trigger(data);
+    if (!response.success) {
+      toast.error(response.message);
+      return;
     }
+    setPhone(data.phone);
+    toast.success('کد اعتبار سنجی به شماره شما ارسال شد.');
+    setActiveStep('otp');
   };
 
   return (

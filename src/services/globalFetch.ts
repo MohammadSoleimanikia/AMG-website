@@ -49,7 +49,7 @@ export async function globalFetch<T>(
       statusCode: 200,
       errors: null,
       success: true,
-      message: 'OK',
+      message: data.message,
     };
   } catch (error) {
     return {

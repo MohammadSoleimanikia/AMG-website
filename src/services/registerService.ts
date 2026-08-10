@@ -1,4 +1,4 @@
-import { SignUpFormType } from '@/validattion/signUpSchema';
+import { SignUpFormType } from '@/validation/signUpSchema';
 import { REGISTER } from '.';
 import { globalFetch } from './globalFetch';
 
