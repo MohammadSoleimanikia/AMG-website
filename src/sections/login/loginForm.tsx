@@ -15,45 +15,34 @@ import { loginFetcher } from '@/services/loginFetcher';
 
 type LoginProps = {
   setPhone: Dispatch<SetStateAction<string>>;
+  phone: string;
   setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
 };
-export default function LoginForm({ setActiveStep, setPhone }: LoginProps) {
-  const { trigger, isMutating } = useSWRMutation(LOGIN, loginFetcher);
+export default function LoginForm({ setActiveStep, setPhone, phone }: LoginProps) {
+  const { trigger, isMutating, error } = useSWRMutation(LOGIN, loginFetcher);
 
   const methods = useForm<LoginRequest>({
-    defaultValues: { phone: '' },
+    defaultValues: { phone: phone || '' },
     mode: 'onSubmit',
     resolver: yupResolver(loginSchema),
   });
 
   const submitHandler = async (data: LoginRequest) => {
     const response = await trigger(data);
-    if (!response.success) {
-      toast.error(response.message);
-      return;
+    if (response.success == true) {
+      setPhone(data.phone);
+      setActiveStep('otp');
     }
-    setPhone(data.phone);
-    toast.success('کد اعتبار سنجی به شماره شما ارسال شد.');
-    setActiveStep('otp');
   };
 
   return (
     <>
-      <Toaster
-        position="bottom-center"
-        reverseOrder={false}
-        toastOptions={{
-          duration: 4000,
-          style: {
-            background: '#343A40',
-            color: '#fff',
-          },
-          icon: '✅',
-        }}
-      />
       <FormProvider methods={methods} handleSubmit={methods.handleSubmit(submitHandler)}>
         <div className="flex w-full flex-col items-center justify-center">
           <RHFTextField
+          
+            className='remove-arrow'
+            type="number"
             name="phone"
             placeholder="شماره تلفن"
             slotProps={{

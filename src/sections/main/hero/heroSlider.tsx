@@ -38,7 +38,6 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
 
     swiper.slideNext();
   };
-
   return (
     <div className={clsx("relative w-full")}>
       {/* Main Hero Swiper */}

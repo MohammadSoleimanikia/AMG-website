@@ -13,6 +13,8 @@ import CacheProvider from '@/theme/CacheProvider';
 import { Yekan_Bakh } from '@/assets/fonts';
 
 import ThemeProvider from '@/theme';
+import { Toaster } from 'react-hot-toast';
+import UserProvider from '@/providers/userProvider';
 
 export default function RootLayout({
   children,
@@ -26,15 +28,29 @@ export default function RootLayout({
       className={`h-screen w-full ${Yekan_Bakh.variable} ${Yekan_Bakh.className}`}
     >
       <body id="__next">
-        <CacheProvider>
-          <ThemeProvider>
-            <HomeHeader />
-            <main className="bg-background-default  pt-[calc(76px+56px)] xl:pt-[calc(116px+60px)]">
-              {children}
-            </main>
-            <Footer />
-          </ThemeProvider>
-        </CacheProvider>
+        <UserProvider>
+          <CacheProvider>
+            <ThemeProvider>
+              <Toaster
+                position="bottom-center"
+                reverseOrder={false}
+                toastOptions={{
+                  duration: 4000,
+                  style: {
+                    background: '#343A40',
+                    color: '#fff',
+                  },
+                  icon: '✅',
+                }}
+              />
+              <HomeHeader />
+              <main className="bg-background-default pt-[calc(76px+56px)] xl:pt-[calc(116px+60px)]">
+                {children}
+              </main>
+              <Footer />
+            </ThemeProvider>
+          </CacheProvider>
+        </UserProvider>
       </body>
     </html>
   );

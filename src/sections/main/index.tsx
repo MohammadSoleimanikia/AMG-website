@@ -1,4 +1,3 @@
-import { Container } from '@mui/material';
 import BestCars from './bestCars';
 import ProductShowcase from './productShowcase';
 import BestOffer from './bestOffer';
@@ -15,6 +14,7 @@ import BestProductsSVG from './bestProducts/bestProductsSVG';
 import GeneralError from '@/components/errorComponent';
 
 export default async function MainHome() {
+  
   const homeData = await fetchHomeData();
   if (!homeData.success || !homeData.data) {
     return <GeneralError message={homeData.message} />;

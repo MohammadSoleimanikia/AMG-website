@@ -9,7 +9,7 @@ export default function LoginPage() {
   const [phone, setPhone] = useState('');
 
   const [activeStep, setActiveStep] = useState<'login' | 'signUp' | 'otp'>('login');
-  if (activeStep === 'otp') return <OtpForm setActiveStep={setActiveStep} />;
+  if (activeStep === 'otp') return <OtpForm phone={phone} setActiveStep={setActiveStep} />;
   return (
     <div className="mx-2 w-full max-w-[400px] rounded-3xl bg-background-paper p-6 shadow-s18">
       {/* head section of form */}
@@ -18,7 +18,7 @@ export default function LoginPage() {
       {/* form */}
       <div className="mb-6 mt-14 px-6">
         {activeStep === 'login' ? (
-          <LoginForm setPhone={setPhone} setActiveStep={setActiveStep} />
+          <LoginForm phone={phone} setPhone={setPhone} setActiveStep={setActiveStep} />
         ) : (
           <SignUpForm setActiveStep={setActiveStep} />
         )}
