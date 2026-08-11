@@ -30,7 +30,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         href={href}
         className="flex flex-1 flex-col justify-between"
       >
-        <div className="flex items-center justify-center px-10 py-3 sm:pt-10 md:px-12">
+        <div className="flex flex-1 items-center justify-center px-10 py-3 sm:pt-10 md:px-12">
           <Image
             src={product.cover}
             alt={product.name}

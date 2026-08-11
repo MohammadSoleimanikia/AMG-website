@@ -21,12 +21,12 @@ export default function NewestProductsSlider({
  if (!isMounted) {
     return (
       // skeleton
-      <div dir="rtl" className="relative w-full overflow-hidden">
-        <div className="flex w-full flex-nowrap gap-[12px] sm:gap-5 md:gap-5 xl:gap-[30px]">
+      <div dir="rtl" className="relative h-full w-full overflow-hidden">
+        <div className="flex h-full w-full flex-nowrap gap-[12px] sm:gap-5 md:gap-5 xl:gap-[30px]">
           {products.map((product) => (
             <div
               key={product.id}
-              className="min-w-0 flex-none basis-[calc((100%_-_12px)_/_2)] sm:basis-[calc((100%_-_20px)_/_2)] md:basis-[calc((100%_-_40px)_/_3)] xl:basis-[calc((100%_-_90px)_/_4)] [&>*]:h-full"
+              className="min-w-0 flex-none basis-[calc((100%_-_12px)_/_2)] sm:basis-[calc((100%_-_20px)_/_2)] md:basis-[calc((100%_-_40px)_/_3)] xl:basis-[calc((100%_-_90px)_/_4)] !h-full"
             >
               <ProductCard product={product} />
             </div>
