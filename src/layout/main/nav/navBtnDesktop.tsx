@@ -57,7 +57,7 @@ export default function NavButtonDesktop({ navItem }: NavButtonProps) {
             'bg-primary-light text-text-primary hover:bg-primary-main hover:text-common-white',
         )}
       >
-        <Typography variant="body1">{navItem.faName}</Typography>
+        <Typography variant="body1" className='text-base font-medium'>{navItem.faName}</Typography>
       </Button>
 
       {hasChildren && isOpen ? (

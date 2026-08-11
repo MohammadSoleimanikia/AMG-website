@@ -45,7 +45,11 @@ export default function RegisterButton({ className }: { className?: string }) {
       size="small"
       className={`flex items-center gap-3 !rounded-2xl bg-background-paper px-4 py-3 text-text-primary ${className}`}
     >
+
       ورود و عضویت
+      <span className="flex size-7 items-center justify-center rounded-full bg-primary-main text-common-white lg:size-9">
+          <FaRegUser className="size-4 shadow-s2" />
+        </span>
     </Button>
   );
 }

@@ -26,7 +26,7 @@ export default function BestCarsSlider({
       className="relative"
       slidesPerView={2}
       spaceBetween={10}
-      speed={450}
+      speed={200}
       initialSlide={selectedItem}
       loop={cars.length > 5}
       watchOverflow

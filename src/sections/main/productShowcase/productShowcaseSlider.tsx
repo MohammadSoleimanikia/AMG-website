@@ -35,7 +35,7 @@ export default function ProductShowcaseSlider({
       className="h-full lg:p-5"
       slidesPerView={2}
       spaceBetween={15}
-      speed={450}
+      speed={200}
       loop={products.length > 4}
       grabCursor
       observer

@@ -142,7 +142,7 @@ export default function BestProducts({
               loop={true}
               slidesPerView={2}
               spaceBetween={20}
-              speed={500}
+              speed={200}
               watchOverflow
               observer
               observeParents

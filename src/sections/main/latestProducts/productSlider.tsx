@@ -47,7 +47,7 @@ export default function NewestProductsSlider({
       className="h-full w-full"
       slidesPerView={2}
       spaceBetween={10}
-      speed={450}
+      speed={200}
       loop={products.length > 4}
       grabCursor
       watchOverflow

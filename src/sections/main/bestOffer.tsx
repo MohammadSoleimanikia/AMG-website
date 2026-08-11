@@ -137,10 +137,10 @@ export default function BestOffer({ type = 'primary', discountData }: BestOfferP
             <Swiper
               className="!m-0 !w-full min-w-0"
               modules={[Navigation]}
-              loop={true}
+              loop={discountData.products.length>5}
               slidesPerView={2}
               spaceBetween={20}
-              speed={500}
+              speed={200}
               watchOverflow
               observer
               observeParents

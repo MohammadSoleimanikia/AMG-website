@@ -54,8 +54,11 @@ export default function LoginForm({ setActiveStep, setPhone, phone }: LoginProps
                     <HiOutlineDevicePhoneMobile className="size-6" />
                   </InputAdornment>
                 ),
+                
               },
-              
+              htmlInput:{
+                dir:'rtl'
+              }
             }}
           />
 

@@ -32,7 +32,7 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
   const handleNextSlide = () => {
     const swiper = mainSwiperRef.current;
 
-    if (!swiper || swiper.destroyed) {
+    if (!swiper) {
       return;
     }
 
@@ -46,7 +46,7 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
         modules={[Autoplay, Pagination]}
         slidesPerView={1}
         spaceBetween={0}
-        speed={500}
+        speed={200}
         loop={images.length > 1}
         autoplay={{
           delay: 4000,
@@ -55,6 +55,7 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
         }}
         onSlideChange={(swiper) => {
           setActive(swiper.realIndex);
+          console.log("active",active)
         }}
 
         onSwiper={(swiper) => {
@@ -126,7 +127,8 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
                   )}
                   key={item.image}
                   onClick={() => {
-                    mainSwiperRef.current?.slideTo(index);
+                    mainSwiperRef.current?.slideToLoop(index);
+                    console.log("index",index)
                   }}
                 >
                   <Image className="!size-full [&_img]:object-cover" src={item.image} />
