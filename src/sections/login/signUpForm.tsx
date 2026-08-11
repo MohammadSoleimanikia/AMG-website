@@ -6,11 +6,7 @@ import { FiUser } from 'react-icons/fi';
 
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import {
-  ButtonBase,
-  FormHelperText,
-  InputAdornment,
-} from '@mui/material';
+import { ButtonBase, FormHelperText, InputAdornment } from '@mui/material';
 
 import React, { Dispatch, SetStateAction } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -23,7 +19,11 @@ import FormProvider from '@/components/RHF/formProvider';
 
 import { SignUpFormType, signUpSchema } from '@/validation/signUpSchema';
 import { REGISTER } from '@/services';
-import { registerFetcher } from '@/services/registerFetcher'; 
+import { swrMutationFetcher } from '@/services/mutationFetcher';
+import RHFPhone from '@/components/RHF/RHFPhoneInput';
+import { BaseResponse } from '@/_types/_bsResponse';
+import { RegisterResponse } from '@/_types/_login';
+import toast from 'react-hot-toast';
 
 type SignUpProps = {
   setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
@@ -31,9 +31,9 @@ type SignUpProps = {
 
 export default function SignUpForm({ setActiveStep }: SignUpProps) {
   const { trigger, isMutating } = useSWRMutation(
-    REGISTER,
-    registerFetcher,
-  );
+  REGISTER,
+  swrMutationFetcher<RegisterResponse, SignUpFormType>,
+);
 
   const methods = useForm<SignUpFormType>({
     defaultValues: {
@@ -51,6 +51,7 @@ export default function SignUpForm({ setActiveStep }: SignUpProps) {
     const response = await trigger(data);
 
     if (response.success) {
+      toast.success("کد اعتبار سنجی برای شما ارسال شد")
       setActiveStep('otp');
     }
   };
@@ -58,10 +59,7 @@ export default function SignUpForm({ setActiveStep }: SignUpProps) {
   const activeType = methods.watch('type');
 
   return (
-    <FormProvider
-      methods={methods}
-      handleSubmit={methods.handleSubmit(submitHandler)}
-    >
+    <FormProvider methods={methods} handleSubmit={methods.handleSubmit(submitHandler)}>
       <div className="flex w-full flex-col items-center justify-center space-y-4">
         {/* full name */}
         <RHFTextField
@@ -79,7 +77,7 @@ export default function SignUpForm({ setActiveStep }: SignUpProps) {
         />
 
         {/* mobile number */}
-        <RHFTextField
+        <RHFPhone
           name="phone"
           placeholder="شماره موبایل"
           slotProps={{
@@ -89,6 +87,9 @@ export default function SignUpForm({ setActiveStep }: SignUpProps) {
                   <HiOutlineDevicePhoneMobile className="size-6" />
                 </InputAdornment>
               ),
+            },
+            htmlInput: {
+              dir: 'rtl',
             },
           }}
         />
@@ -114,11 +115,7 @@ export default function SignUpForm({ setActiveStep }: SignUpProps) {
             control={methods.control}
             name="gender"
             render={({ field }) => (
-              <Select
-                className="w-full"
-                value={field.value}
-                onChange={field.onChange}
-              >
+              <Select className="w-full" value={field.value} onChange={field.onChange}>
                 <MenuItem value="1">مرد</MenuItem>
                 <MenuItem value="0">زن</MenuItem>
                 <MenuItem value="2">سایر</MenuItem>

@@ -5,13 +5,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import clsx from 'clsx';
 import { type LoginRequest, loginSchema } from '@/validation/loginSchema';
-import RHFTextField from '@/components/RHF/RHFTextField';
 import FormProvider from '@/components/RHF/formProvider';
 import useSWRMutation from 'swr/mutation';
 import { LOGIN } from '@/services';
 import { Dispatch, SetStateAction } from 'react';
-import toast, { Toaster } from 'react-hot-toast';
-import { loginFetcher } from '@/services/loginFetcher';
+import RHFPhone from '@/components/RHF/RHFPhoneInput';
+import { LoginResponse } from '@/_types/_login';
+import { swrMutationFetcher } from '@/services/mutationFetcher';
+import toast from 'react-hot-toast';
 
 type LoginProps = {
   setPhone: Dispatch<SetStateAction<string>>;
@@ -19,8 +20,10 @@ type LoginProps = {
   setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
 };
 export default function LoginForm({ setActiveStep, setPhone, phone }: LoginProps) {
-  const { trigger, isMutating, error } = useSWRMutation(LOGIN, loginFetcher);
-
+ const { trigger, isMutating } = useSWRMutation(
+  LOGIN,
+  swrMutationFetcher<LoginResponse,LoginRequest>,
+);
   const methods = useForm<LoginRequest>({
     defaultValues: { phone: phone || '' },
     mode: 'onSubmit',
@@ -31,6 +34,7 @@ export default function LoginForm({ setActiveStep, setPhone, phone }: LoginProps
     const response = await trigger(data);
     if (response.success == true) {
       setPhone(data.phone);
+      toast.success('کد اعتبار سنجی به تلفن شما ارسال شد')
       setActiveStep('otp');
     }
   };
@@ -39,10 +43,8 @@ export default function LoginForm({ setActiveStep, setPhone, phone }: LoginProps
     <>
       <FormProvider methods={methods} handleSubmit={methods.handleSubmit(submitHandler)}>
         <div className="flex w-full flex-col items-center justify-center">
-          <RHFTextField
-          
-            className='remove-arrow'
-            type="number"
+          <RHFPhone
+            className='text-right'
             name="phone"
             placeholder="شماره تلفن"
             slotProps={{
@@ -53,6 +55,7 @@ export default function LoginForm({ setActiveStep, setPhone, phone }: LoginProps
                   </InputAdornment>
                 ),
               },
+              
             }}
           />
 

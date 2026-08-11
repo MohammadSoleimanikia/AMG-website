@@ -15,7 +15,7 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     const token = Cookies.get('accessToken');
-
+    console.log(token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -45,7 +45,7 @@ apiClient.interceptors.response.use(
     switch (data.statusCode) {
       case 401:
         Cookies.remove('accessToken');
-        
+
         return Promise.reject({
           ...response,
           data: null,
@@ -85,8 +85,7 @@ apiClient.interceptors.response.use(
     }
 
     // after error validations
-    toast.success(data.message||'کد اعتبارسنجی برای شما ارسال شد');
-    console.log(data.message)
+    
     return {
       ...response,
       data: data,

@@ -9,10 +9,15 @@ import { OtpRequest, otpSchema } from '@/validation/otpSchema';
 import { Button, ButtonBase, FormHelperText, Typography } from '@mui/material';
 import useSWRMutation from 'swr/mutation';
 import { OTP } from '@/services';
-import { otpFetcher } from '@/services/otpFetcher';
+import { swrMutationFetcher } from '@/services/mutationFetcher';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { useUser } from '@/providers/userProvider';
 import { setCookie } from '@/services/cookie/setCookie';
+import { redirect } from 'next/navigation';
+import { OtpResponse } from '@/_types/_login';
+import toast from 'react-hot-toast';
+import { jwtDecode } from "jwt-decode";
+
 type OtpFormProps = {
   setActiveStep: (step: 'login' | 'signUp' | 'otp') => void;
   phone: string;
@@ -20,8 +25,7 @@ type OtpFormProps = {
 
 export default function OtpForm({ setActiveStep, phone }: OtpFormProps) {
   const { setUser } = useUser();
-  const { trigger, isMutating } = useSWRMutation(OTP, otpFetcher);
-
+  const { trigger, isMutating } = useSWRMutation(OTP, swrMutationFetcher<OtpResponse , OtpRequest>);
 
   const methods = useForm<OtpRequest>({
     defaultValues: { code: '', phone: phone },
@@ -33,8 +37,17 @@ export default function OtpForm({ setActiveStep, phone }: OtpFormProps) {
     const response = await trigger({ code: data.code, phone });
     if (response.success == true && response.data?.token) {
       setUser(response.data?.user);
-      setCookie('accessToken',response.data?.token)
       
+      // get exp date from token
+      const decoded = jwtDecode(response.data?.token);
+      if(decoded.exp){
+        const expDate=new Date(Number(decoded.exp)*1000)
+        console.log(expDate);
+        setCookie('accessToken', response.data?.token,{expires:expDate});
+        toast.success("ورود با موفقیت انجام شد")
+        redirect('/');
+      }
+      toast.error('اعتبار سنجی با خطا مواجه شد!')
     }
   };
   return (
@@ -85,6 +98,9 @@ export default function OtpForm({ setActiveStep, phone }: OtpFormProps) {
                 value={field.value}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
+                onComplete={() => {
+                  methods.handleSubmit(submitHandler)();
+                }}
                 render={({ slots }) => (
                   <div className="flex items-center justify-center gap-2">
                     {slots.map((slot, index) => (

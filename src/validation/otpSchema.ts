@@ -1,3 +1,5 @@
+import { PHONE_REGEX } from '@/utils/regex';
+import { PHASE_DEVELOPMENT_SERVER } from 'next/dist/shared/lib/constants';
 import * as yup from 'yup';
 export const otpSchema = yup.object({
   code: yup
@@ -7,6 +9,6 @@ export const otpSchema = yup.object({
   phone: yup
     .string()
     .required('شماره تلفن الزامی میباشد')
-    .matches(/^09[0-9]{9}$/, 'شماره تلفن صحیح نمی باشد'),
+    .matches(PHONE_REGEX, 'شماره تلفن صحیح نمی باشد'),
 });
 export type OtpRequest = yup.InferType<typeof otpSchema>;
