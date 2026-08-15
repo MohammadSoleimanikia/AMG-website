@@ -17,11 +17,11 @@ export default function SectionWrapper({
   container = true,
 }: SectionWrapperProps) {
   return (
-    <section className={clsx(TOP_PADDING, 'w-full ', className)}>
+    <section className={clsx(TOP_PADDING, 'w-full', className)}>
       {container ? (
         <Container
           maxWidth="xxl"
-          
+
           className={clsx('w-full', containerClassName)}
         >
           {children}

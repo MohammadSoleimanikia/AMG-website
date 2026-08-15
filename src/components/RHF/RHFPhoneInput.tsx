@@ -24,11 +24,8 @@ export default function RHFPhone({ name, ...other }: Props) {
       control={control}
       render={({ field, fieldState: { error } }) => (
         <TextField
-          
-          
           fullWidth
           type="tel"
-          autoComplete="tel"
           value={field.value ?? ''}
           slotProps={{
             htmlInput: {
@@ -41,7 +38,6 @@ export default function RHFPhone({ name, ...other }: Props) {
             const value = toEnglishDigits(event.target.value)
               .replace(/\D/g, '')
               .slice(0, 11);
-
             field.onChange(value);
           }}
           

@@ -60,7 +60,7 @@ export default function BestCars({
                 selectedItem={0}
                 onSwiper={(swiper) => {
                   swiperRef.current = swiper;
-                }}
+                }}  
               />
             ) : (
               <BestCarsSliderFallback cars={bestCarData.categories} selectedItem={0} />

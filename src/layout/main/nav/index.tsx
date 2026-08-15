@@ -11,13 +11,13 @@ import { HeaderData } from '@/_types/_header';
 export default function NavBar({ headerData }: { headerData: HeaderData }) {
   const isNavHidden = useScrollTrigger();
   return (
-    <div className="relative z-10 h-header-mobile ">
       <Slide
         in={!isNavHidden}
         timeout={350}
         direction="down"
         unmountOnExit
         appear={false}
+        className='relative z-10 h-header-mobile bg-background-paper'
       >
         <nav className="z-[1000] h-full w-full bg-background-paper shadow-s0 xl:h-navbar">
           <Container maxWidth="xxl" className="h-full">
@@ -45,6 +45,5 @@ export default function NavBar({ headerData }: { headerData: HeaderData }) {
           </Container>
         </nav>
       </Slide>
-    </div>
   );
 }

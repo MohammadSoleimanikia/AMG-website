@@ -8,7 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { ButtonBase, FormHelperText, InputAdornment } from '@mui/material';
 
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import clsx from 'clsx';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -24,35 +24,52 @@ import RHFPhone from '@/components/RHF/RHFPhoneInput';
 import { BaseResponse } from '@/_types/_bsResponse';
 import { RegisterResponse } from '@/_types/_login';
 import toast from 'react-hot-toast';
+import { AuthStep, OtpOrigin } from '.';
 
 type SignUpProps = {
-  setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
+  values: SignUpFormType;
+  onChange: Dispatch<SetStateAction<SignUpFormType>>;
+  setActiveStep: Dispatch<SetStateAction<AuthStep>>;
+  setOtpPhone: Dispatch<SetStateAction<string>>;
+  setOtpOrigin: Dispatch<SetStateAction<OtpOrigin>>;
 };
 
-export default function SignUpForm({ setActiveStep }: SignUpProps) {
+export default function SignUpForm({
+  setActiveStep,
+  onChange,
+  setOtpOrigin,
+  setOtpPhone,
+  values,
+}: SignUpProps) {
   const { trigger, isMutating } = useSWRMutation(
-  REGISTER,
-  swrMutationFetcher<RegisterResponse, SignUpFormType>,
-);
+    REGISTER,
+    swrMutationFetcher<RegisterResponse, SignUpFormType>,
+  );
 
   const methods = useForm<SignUpFormType>({
-    defaultValues: {
-      phone: '',
-      name: '',
-      nationalCode: '',
-      gender: '1',
-      type: 'retailer',
-    },
+    defaultValues: values,
     mode: 'onSubmit',
     resolver: yupResolver(signUpSchema),
   });
 
-  const submitHandler = async (data: SignUpFormType) => {
-    const response = await trigger(data);
+  useEffect(() => {
+    methods.reset(values);
+  }, [values]);
 
-    if (response.success) {
-      toast.success("کد اعتبار سنجی برای شما ارسال شد")
-      setActiveStep('otp');
+  const submitHandler = async (data: SignUpFormType) => {
+    try {
+      const response = await trigger(data);
+
+      if (response.success) {
+        onChange(data);
+        setOtpPhone(data.phone);
+        setOtpOrigin('signUp');
+
+        toast.success('کد اعتبار سنجی برای شما ارسال شد');
+        setActiveStep('otp');
+      }
+    } catch (error) {
+      console.log('Register error:', error);
     }
   };
 
@@ -105,6 +122,9 @@ export default function SignUpForm({ setActiveStep }: SignUpProps) {
                   <CiCreditCard1 className="size-6" />
                 </InputAdornment>
               ),
+            },
+            htmlInput: {
+              maxLength: 10,
             },
           }}
         />

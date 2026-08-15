@@ -20,16 +20,16 @@ export default function SliderNavButtons({
       <ButtonBase
         type="button"
         onClick={handlePrevSlide}
-        className={clsx(type==="primary"? "bg-custom-4 ":"bg-background-default",
-          "flex size-10 items-center justify-center rounded-full  text-text-primary")}
+        className={clsx(type==="primary"? "bg-custom-4 hover:bg-background-paper":"bg-background-default",
+          "flex size-10 items-center justify-center rounded-full  text-text-primary  transition-colors duration-300")}
       >
         <FaAngleLeft className={clsx(type ==="primary" && "text-primary-main","size-4")} />
       </ButtonBase>
       <ButtonBase
         type="button"
         onClick={handleNextSlide}
-        className={clsx(type==="primary"? "bg-custom-4 ":"bg-background-default",
-          "flex size-10 items-center justify-center rounded-full  text-text-primary")}
+        className={clsx(type==="primary"? "bg-custom-4 hover:bg-background-paper":"bg-background-default",
+          "flex size-10 items-center justify-center rounded-full  text-text-primary transition-colors duration-300" )}
       >
         <FaAngleRight className={clsx(type ==="primary" && "text-primary-main","size-4")} />
       </ButtonBase>

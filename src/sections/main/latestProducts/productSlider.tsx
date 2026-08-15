@@ -1,6 +1,5 @@
 'use client';
 
-import SwiperSkeleton from '@/components/swiperSkeleton';
 import useIsMounted from '@/hooks/useIsMounted';
 import type { Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';

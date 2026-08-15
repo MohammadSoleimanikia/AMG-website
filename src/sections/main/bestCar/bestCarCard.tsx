@@ -29,7 +29,7 @@ export default function BestCarCard({ car, selected = false }: BestCarCardProps)
           visibleByDefault
           src={car.image}
           alt={car.title}
-          className="transition-transform duration-300 group-hover:scale-[1.06] [&_img]:aspect-square [&_img]:size-[100px] [&_img]:min-h-[100px] [&_img]:min-w-[100px] [&_img]:rounded-full [&_img]:object-cover sm:[&_img]:size-[143px] sm:[&_img]:min-h-[143px] sm:[&_img]:min-w-[143px]"
+          className="transition-transform [&_img]:will-change-transform duration-300 group-hover:scale-[1.06] [&_img]:aspect-square [&_img]:size-[100px] [&_img]:min-h-[100px] [&_img]:min-w-[100px] [&_img]:rounded-full [&_img]:object-cover sm:[&_img]:size-[143px] sm:[&_img]:min-h-[143px] sm:[&_img]:min-w-[143px]"
         />
 
         <Typography

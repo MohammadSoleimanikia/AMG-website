@@ -10,7 +10,7 @@ export default function MobileBottomBar() {
     <div className="relative">
       <Container maxWidth="xxl" className="fixed bottom-2 left-0 z-[100] w-full">
         <nav
-          className="rounded-3xl border-t border-solid border-grey-200 bg-background-paper px-4 py-3 shadow-s0 xl:hidden"
+          className="rounded-3xl border-t border-solid border-grey-200 bg-background-paper px-4 py-3  xl:hidden"
         >
           <div className="mx-auto flex  items-center justify-between">
             {/* cart */}

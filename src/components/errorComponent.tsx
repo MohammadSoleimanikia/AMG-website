@@ -18,7 +18,7 @@ export default function GeneralError({
   return (
     <div
       className={clsx(
-        'flex min-h-[300px] w-full flex-col items-center justify-center gap-4 rounded-3xl bg-background-paper px-5 py-10 text-center',
+        'flex min-h-screen w-full flex-col items-center justify-center gap-4 bg-background-paper px-5 py-10 text-center',
         className,
       )}
     >
@@ -34,6 +34,7 @@ export default function GeneralError({
         <Button component={Link} href="/" variant="contained">
           بازگشت به خانه
         </Button>
+        
       ) : null}
     </div>
   );

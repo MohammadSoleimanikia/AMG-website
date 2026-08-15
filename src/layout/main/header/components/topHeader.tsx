@@ -9,49 +9,11 @@ import SearchInput from '@/layout/main/header/components/searchInput';
 import { Container, useScrollTrigger } from '@mui/material';
 import { HeaderData } from '@/_types/_header';
 import Link from 'next/link';
-type StableScrollTriggerOptions = {
-  enterThreshold: number;
-  exitThreshold: number;
-};
-
-function useStableScrollTrigger({
-  enterThreshold,
-  exitThreshold,
-}: StableScrollTriggerOptions) {
-  const enterTrigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: enterThreshold,
-  });
-
-  const exitTrigger = useScrollTrigger({
-    disableHysteresis: true,
-    threshold: exitThreshold,
-  });
-
-  const [isTriggered, setIsTriggered] = useState(false);
-
-  useEffect(() => {
-    setIsTriggered((currentValue) => {
-      if (!currentValue && enterTrigger) {
-        return true;
-      }
-
-      if (currentValue && !exitTrigger) {
-        return false;
-      }
-
-      return currentValue;
-    });
-  }, [enterTrigger, exitTrigger]);
-
-  return isTriggered;
-}
-
 export default function TopHeader({headerData}:{headerData:HeaderData}) {
-  const isHeaderShrunk = useStableScrollTrigger({
-    enterThreshold: 120,
-    exitThreshold: 20,
-  });
+ const isHeaderShrunk = useScrollTrigger({
+  disableHysteresis: true,
+  threshold: 120,
+});
   const isNavHidden = useScrollTrigger();
   return (
     <div

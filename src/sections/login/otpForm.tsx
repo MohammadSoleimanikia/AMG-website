@@ -17,13 +17,16 @@ import { redirect } from 'next/navigation';
 import { OtpResponse } from '@/_types/_login';
 import toast from 'react-hot-toast';
 import { jwtDecode } from "jwt-decode";
+import { Dispatch, SetStateAction } from 'react';
 
 type OtpFormProps = {
-  setActiveStep: (step: 'login' | 'signUp' | 'otp') => void;
   phone: string;
+  origin: 'login' | 'signUp';
+  setActiveStep: Dispatch<
+    SetStateAction<'login' | 'signUp' | 'otp'>
+  >;
 };
-
-export default function OtpForm({ setActiveStep, phone }: OtpFormProps) {
+export default function OtpForm({ setActiveStep, phone,origin }: OtpFormProps) {
   const { setUser } = useUser();
   const { trigger, isMutating } = useSWRMutation(OTP, swrMutationFetcher<OtpResponse , OtpRequest>);
 
@@ -33,23 +36,42 @@ export default function OtpForm({ setActiveStep, phone }: OtpFormProps) {
     resolver: yupResolver(otpSchema),
   });
 
-  const submitHandler = async (data: OtpRequest) => {
-    const response = await trigger({ code: data.code, phone });
-    if (response.success == true && response.data?.token) {
-      setUser(response.data?.user);
-      
-      // get exp date from token
-      const decoded = jwtDecode(response.data?.token);
-      if(decoded.exp){
-        const expDate=new Date(Number(decoded.exp)*1000)
-        console.log(expDate);
-        setCookie('accessToken', response.data?.token,{expires:expDate});
-        toast.success("ورود با موفقیت انجام شد")
-        redirect('/');
-      }
-      toast.error('اعتبار سنجی با خطا مواجه شد!')
+const submitHandler = async (data: OtpRequest) => {
+  try {
+    const response = await trigger({
+      code: data.code,
+      phone,
+    });
+
+    if (!response.success || !response.data?.token) {
+      toast.error('اعتبارسنجی با خطا مواجه شد!');
+      return;
     }
-  };
+
+    const token = response.data.token;
+
+    const decoded = jwtDecode<{ exp?: number }>(token);
+
+    if (!decoded.exp) {
+      toast.error('توکن معتبر نیست!');
+      return;
+    }
+
+    const expDate = new Date(decoded.exp * 1000);
+
+    setUser(response.data.user);
+
+    setCookie('accessToken', token, {
+      expires: expDate,
+    });
+
+    toast.success('ورود با موفقیت انجام شد');
+
+    redirect('/');
+  } catch (error) {
+    console.log('OTP verification error:', error);
+  }
+};
   return (
     <div className="mx-2 w-full max-w-[400px] rounded-3xl bg-background-paper p-6 shadow-s18">
       {/* head section of form */}
@@ -129,7 +151,7 @@ export default function OtpForm({ setActiveStep, phone }: OtpFormProps) {
             )}
           />
           {methods.formState?.errors?.code && (
-            <FormHelperText>{methods.formState.errors.code.message}</FormHelperText>
+            <FormHelperText className='text-error-main mt-4'>{methods.formState.errors.code.message}</FormHelperText>
           )}
           <ButtonBase
             className={clsx(
@@ -146,7 +168,7 @@ export default function OtpForm({ setActiveStep, phone }: OtpFormProps) {
           <div className="flex items-center justify-between">
             <Button
               className={clsx('bg-transparent')}
-              onClick={() => setActiveStep('login')}
+              onClick={() => setActiveStep(origin)}
             >
               <Typography
                 className="flex items-center justify-center gap-1 text-grey-600 hover:text-info-main"

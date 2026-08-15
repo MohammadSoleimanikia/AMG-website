@@ -14,7 +14,6 @@ import BestProductsSVG from './bestProducts/bestProductsSVG';
 import GeneralError from '@/components/errorComponent';
 
 export default async function MainHome() {
-  
   const homeData = await fetchHomeData();
   if (!homeData.success || !homeData.data) {
     return <GeneralError message={homeData.message} />;

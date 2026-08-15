@@ -4,12 +4,31 @@ import SignUpForm from '@/sections/login/signUpForm';
 import TopFormSelector from '@/sections/login/topFormSelector';
 import { useState } from 'react';
 import OtpForm from './otpForm';
+import { SignUpFormType } from '@/validation/signUpSchema';
+export type AuthStep = 'login' | 'signUp' | 'otp';
+export type OtpOrigin = 'login' | 'signUp';
 
 export default function LoginPage() {
-  const [phone, setPhone] = useState('');
+  const [activeStep, setActiveStep] = useState<AuthStep>('login');
 
-  const [activeStep, setActiveStep] = useState<'login' | 'signUp' | 'otp'>('login');
-  if (activeStep === 'otp') return <OtpForm phone={phone} setActiveStep={setActiveStep} />;
+  const [loginData, setLoginData] = useState({
+    phone: '',
+  });
+
+  const [signUpData, setSignUpData] = useState<SignUpFormType>({
+    phone: '',
+    name: '',
+    nationalCode: '',
+    gender: '1',
+    type: 'retailer',
+  });
+
+  const [otpPhone, setOtpPhone] = useState('');
+  const [otpOrigin, setOtpOrigin] = useState<OtpOrigin>('login');
+
+  if (activeStep === 'otp') {
+    return <OtpForm phone={otpPhone} origin={otpOrigin} setActiveStep={setActiveStep} />;
+  }
   return (
     <div className="mx-2 w-full max-w-[400px] rounded-3xl bg-background-paper p-6 shadow-s18">
       {/* head section of form */}
@@ -18,9 +37,21 @@ export default function LoginPage() {
       {/* form */}
       <div className="mb-6 mt-14 px-6">
         {activeStep === 'login' ? (
-          <LoginForm phone={phone} setPhone={setPhone} setActiveStep={setActiveStep} />
+          <LoginForm
+            values={loginData}
+            onChange={setLoginData}
+            setActiveStep={setActiveStep}
+            setOtpPhone={setOtpPhone}
+            setOtpOrigin={setOtpOrigin}
+          />
         ) : (
-          <SignUpForm setActiveStep={setActiveStep} />
+          <SignUpForm
+            values={signUpData}
+            onChange={setSignUpData}
+            setActiveStep={setActiveStep}
+            setOtpPhone={setOtpPhone}
+            setOtpOrigin={setOtpOrigin}
+          />
         )}
       </div>
     </div>

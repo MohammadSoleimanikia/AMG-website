@@ -1,6 +1,6 @@
 import Image from '@/components/image';
-import {  TOP_PADDING } from '@/utils/layout';
-import { Card, Container,  Typography } from '@mui/material';
+import { TOP_PADDING } from '@/utils/layout';
+import { Card, Container, Typography } from '@mui/material';
 import clsx from 'clsx/lite';
 import { TbWorld } from 'react-icons/tb';
 import { HiOutlineMail, HiOutlinePhone } from 'react-icons/hi';
@@ -13,10 +13,10 @@ import SocialLink from './socialLink';
 import Link from 'next/link';
 
 const processItems = [
-  { id: 1, title: 'تیکت', icon: "https://amgplus.ir/img/discussion.png" },
-  { id: 2, title: 'سفارش کالا', icon: "https://amgplus.ir/img/barcode.png" },
-  { id: 3, title: 'ارسال رایگان', icon: "https://amgplus.ir/img/truck.png" },
-  { id: 4, title: 'پشتیبانی', icon: "https://amgplus.ir/img/worker.png" },
+  { id: 1, title: 'تیکت', icon: 'https://amgplus.ir/img/discussion.png' },
+  { id: 2, title: 'سفارش کالا', icon: 'https://amgplus.ir/img/barcode.png' },
+  { id: 3, title: 'ارسال رایگان', icon: 'https://amgplus.ir/img/truck.png' },
+  { id: 4, title: 'پشتیبانی', icon: 'https://amgplus.ir/img/worker.png' },
 ];
 
 export default async function Footer() {
@@ -30,6 +30,7 @@ export default async function Footer() {
       <StoreFeatures features={footerData.data.features} />
       <Container maxWidth="xxl">
         <div className="mt-12 grid grid-cols-1 gap-6 xl:grid-cols-[repeat(14,minmax(0,1fr))]">
+          
           <Card className="order-1 bg-primary-main !p-7 text-center text-common-white shadow-s9 xl:order-none xl:col-span-3">
             <div className="mx-auto size-[100px] rounded-full bg-background-paper p-4">
               <Image
@@ -44,7 +45,7 @@ export default async function Footer() {
             </Typography>
           </Card>
 
-          <Card className="order-2 bg-background-default !p-6 xl:order-none xl:col-span-8">
+          <Card className="order-2 bg-background-default !p-10 xl:order-none xl:col-span-7">
             <div className="flex flex-wrap justify-between gap-8">
               <FooterMenu menu={footerData.data.links} />
               <FooterMenu menu={footerData.data.links_2} />
@@ -74,7 +75,11 @@ export default async function Footer() {
             </div>
           </Card>
 
-          <div className="order-3 flex flex-col justify-center gap-4 xl:order-none xl:col-span-3 xl:justify-start">
+          <div className="order-3 flex flex-col justify-center gap-4 xl:order-none xl:col-span-4 xl:justify-start">
+            <div className="flex justify-end">
+              <Image src={'/images/enamad.png'} width={125} height={136} />
+            </div>
+
             {/* mail section */}
             <div className="flex items-center justify-center gap-3 text-sm text-text-primary xl:justify-end">
               <Link
@@ -111,12 +116,12 @@ export default async function Footer() {
               </a>
             </div>
           </div>
+          
         </div>
 
         <div className="mt-6">
           <Typography variant="body1" className="text-center leading-loose xl:text-start">
-            بزرگترین لوازم یدکی شرق کشور بزرگترین لوازم یدکی شرق کشور بزرگترین لوازم یدکی
-            شرق کشور بزرگترین لوازم یدکی شرق کشور
+            {footerData.data.description.content}
           </Typography>
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 md:justify-between">
@@ -124,7 +129,7 @@ export default async function Footer() {
               <span className="size-9 min-w-9 rounded-full bg-primary-main p-2 text-common-white shadow-s5">
                 <IoLocationOutline className="size-full" />
               </span>
-              <p className=" text-lg">{footerData.data.address}</p>
+              <p className="text-lg">{footerData.data.address}</p>
             </div>
 
             {/* social links */}
@@ -137,19 +142,24 @@ export default async function Footer() {
         </div>
 
         {/* webeto section */}
-        <div className="mx-auto mt-7 flex w-full max-w-[600px] flex-col items-center justify-between gap-4 rounded-3xl bg-background-default px-10 py-5 lg:flex-row xl:rounded-b-none">
+        <div className="mx-auto mt-7 flex h-[80px] w-full max-w-[600px] flex-col items-center justify-between gap-4 rounded-3xl bg-background-default px-10 py-5 lg:flex-row xl:rounded-b-none">
           <p>
-            پیاده‌سازی توسط <span className="font-bold text-primary-main">وبتو</span>
+            پیاده‌ سازی توسط{' '}
+            <b className="font-bold text-primary-main">
+              <a className="font-extrabold text-primary-main" href="http://webeto.co">
+                وبــتـو
+              </a>
+            </b>
           </p>
 
-          <Link href={'webeto.com'} className="flex items-center gap-2">
-            <p>
-              <span className="font-semibold text-primary-main">WEBETO</span>.co
-            </p>
-            <span className="flex size-9 items-center justify-center rounded-full bg-primary-main text-common-white">
+          <a href={'webeto.com'} className="flex items-center ">
+            <span className="pt-2">co.</span>
+            <div className="pt-2 font-extrabold text-primary-main"> WEBETO</div>
+            <span className={clsx("mr-2 flex size-10 items-center justify-center",
+              " rounded-full bg-primary-main p-1.5 text-common-white")}>
               <TbWorld className="size-7" />
             </span>
-          </Link>
+          </a>
         </div>
       </Container>
       <MobileBottomBar />

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+
 import useSWR from 'swr';
 
 import { GET_USER } from '@/services';

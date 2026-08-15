@@ -39,7 +39,7 @@ export default function ProductCollectionSection({
   };
 
   return (
-    <div className={TOP_MARGIN}>
+    <div >
       <TopSliderSection
         title={data.title}
         subTitle={data.subTitle}

@@ -8,43 +8,67 @@ import { type LoginRequest, loginSchema } from '@/validation/loginSchema';
 import FormProvider from '@/components/RHF/formProvider';
 import useSWRMutation from 'swr/mutation';
 import { LOGIN } from '@/services';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import RHFPhone from '@/components/RHF/RHFPhoneInput';
 import { LoginResponse } from '@/_types/_login';
 import { swrMutationFetcher } from '@/services/mutationFetcher';
 import toast from 'react-hot-toast';
+import { AuthStep, OtpOrigin } from '.';
 
 type LoginProps = {
-  setPhone: Dispatch<SetStateAction<string>>;
-  phone: string;
-  setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
+  values: LoginRequest;
+  onChange: Dispatch<SetStateAction<LoginRequest>>;
+  setActiveStep: Dispatch<SetStateAction<AuthStep>>;
+  setOtpPhone: Dispatch<SetStateAction<string>>;
+  setOtpOrigin: Dispatch<SetStateAction<OtpOrigin>>;
 };
-export default function LoginForm({ setActiveStep, setPhone, phone }: LoginProps) {
- const { trigger, isMutating } = useSWRMutation(
-  LOGIN,
-  swrMutationFetcher<LoginResponse,LoginRequest>,
-);
+export default function LoginForm({
+  setActiveStep,
+  values,
+  onChange,
+  setOtpOrigin,
+  setOtpPhone,
+}: LoginProps) {
+  const { trigger, isMutating } = useSWRMutation(
+    LOGIN,
+    swrMutationFetcher<LoginResponse, LoginRequest>,
+  );
   const methods = useForm<LoginRequest>({
-    defaultValues: { phone: phone || '' },
+    defaultValues: values,
     mode: 'onSubmit',
     resolver: yupResolver(loginSchema),
   });
 
+  // set form data after mounting
+  useEffect(() => {
+    methods.reset(values);
+  }, [values]);
   const submitHandler = async (data: LoginRequest) => {
-    const response = await trigger(data);
-    if (response.success == true) {
-      setPhone(data.phone);
-      toast.success('کد اعتبار سنجی به تلفن شما ارسال شد')
-      setActiveStep('otp');
+    try {
+      const response = await trigger(data);
+
+      if (response.success) {
+        // save form data for returning from otp
+        onChange(data);
+
+        // set data for OTP
+        setOtpPhone(data.phone);
+        setOtpOrigin('login');
+
+        toast.success('کد اعتبار سنجی به تلفن شما ارسال شد');
+
+        setActiveStep('otp');
+      }
+    } catch (error) {
+      console.log('Login error:', error);
     }
   };
-
   return (
     <>
       <FormProvider methods={methods} handleSubmit={methods.handleSubmit(submitHandler)}>
         <div className="flex w-full flex-col items-center justify-center">
           <RHFPhone
-            className='text-right'
+            className="text-right"
             name="phone"
             placeholder="شماره تلفن"
             slotProps={{
@@ -54,11 +78,10 @@ export default function LoginForm({ setActiveStep, setPhone, phone }: LoginProps
                     <HiOutlineDevicePhoneMobile className="size-6" />
                   </InputAdornment>
                 ),
-                
               },
-              htmlInput:{
-                dir:'rtl'
-              }
+              htmlInput: {
+                dir: 'rtl',
+              },
             }}
           />
 

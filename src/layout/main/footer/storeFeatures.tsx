@@ -11,16 +11,12 @@ export default function StoreFeatures({features}:{features:FooterFeatures}) {
           component="h2"
           variant="caption"
           className="absolute right-4 top-0 z-10 rounded-full bg-background-default px-4 py-2 text-base shadow-s3 sm:right-8"
-        >
-         {features.title}
-        </Typography>
-
+        >{features.title}</Typography>
         <div
           className="!rounded-3xl !border !border-solid !border-grey-200  !px-5 !py-7 bg-background-paper sm:!px-8"
         >
           <div className="grid grid-cols-1 gap-x-6 gap-y-7 sm:grid-cols-2 xl:grid-cols-4">
             {features.items.map((feature) => {
-              const Icon = feature.icon;
 
               return (
                 <div key={feature.title} className="flex min-w-0 items-center gap-4">

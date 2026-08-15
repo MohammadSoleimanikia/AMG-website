@@ -15,7 +15,6 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   (config) => {
     const token = Cookies.get('accessToken');
-    console.log(token)
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -28,86 +27,102 @@ apiClient.interceptors.request.use(
 apiClient.interceptors.response.use(
   (response) => {
     const data = response.data;
+    const status = response.status;
 
-    // HTTP 405
-    if (response.status === 405) {
-      toast.error(data.message || 'خطای فرم');
+    
+    // HTTP errors
+
+    if (status < 200 || status >= 300) {
+      if (status === 401) {
+        Cookies.remove('accessToken');
+
+      }
+
+      if (status === 402) {
+        toast.error(
+          data?.message || 'شما به این بخش دسترسی ندارید',
+        );
+      }
+
+      if (status === 403) {
+        toast.error(
+          data?.message || 'شما اجازه دسترسی ندارید',
+        );
+      }
+
+      if (status === 404) {
+        toast.error(
+          data?.message || 'مورد درخواست پیدا نشد',
+        );
+      }
+
+      if (status === 405) {
+        toast.error(
+          data?.message || 'خطای فرم',
+        );
+      }
+
+      if (status === 422) {
+        toast.error(
+          data?.message || 'این شماره از قبل در سیستم موجود میباشد',
+        );
+      }
+
+      if (status >= 500) {
+        toast.error(
+          data?.message || 'خطایی در سمت سرور رخ داده است',
+        );
+      }
 
       return Promise.reject({
         ...response,
         data: null,
-        statusCode: 405,
+        statusCode: status, 
         success: false,
-        message: data.message,
+        message: data?.message,
       });
     }
 
-    switch (data.statusCode) {
-      case 401:
-        Cookies.remove('accessToken');
+    // backend errors
 
-        return Promise.reject({
-          ...response,
-          data: null,
-          statusCode: 401,
-          success: false,
-          message: data.message,
-        });
-
-      case 402:
-        toast.error('شما به این بخش دسترسی ندارید');
-
-        return Promise.reject({
-          ...response,
-          data: null,
-          statusCode: 402,
-          success: false,
-          message: data.message,
-        });
-
-      case 403:
-        return Promise.reject({
-          ...response,
-          data: null,
-          statusCode: 403,
-          success: false,
-          message: data.message,
-        });
-
-      case 404:
-        return Promise.reject({
-          ...response,
-          data: null,
-          statusCode: 404,
-          success: false,
-          message: data.message,
-        });
+    if (data?.success === false) {
+      return Promise.reject({
+        ...response,
+        data,
+        statusCode: data?.statusCode || status,
+        success: false,
+        message: data?.message,
+      });
     }
 
-    // after error validations
-    
+    // Success
+
     return {
       ...response,
-      data: data,
-      statusCode: data.statusCode || response.status,
+      data,
+      statusCode: data?.statusCode || status,
       success: true,
-      message: data.message,
+      message: data?.message,
     };
   },
 
+  // other errors 
   (error) => {
     const res = error.response?.data;
 
-    if (res?.statusCode === 401) {
+    if (error.response?.status === 401) {
       Cookies.remove('accessToken');
     }
 
     return Promise.reject({
       ...error,
-      statusCode: 500,
+      statusCode: error.response?.status,
       success: false,
       data: null,
-      message: res?.message,
+      message:
+        res?.message ||
+        error.message ||
+        'ارتباط با سرور برقرار نشد.',
     });
   },
 );

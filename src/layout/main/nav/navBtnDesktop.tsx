@@ -45,19 +45,21 @@ export default function NavButtonDesktop({ navItem }: NavButtonProps) {
         component={navItem.path ? Link : 'div'}
         href={navItem.path ? navItem.path : undefined}
         size="small"
-        variant={hasChildren ? 'text' : 'contained'}
         className={clsx(
           'h-9 !rounded-xl px-4 font-medium transition-all duration-200',
-          
-            !isOpen && !isActive &&
+
+          !isOpen &&
+            !isActive &&
             'bg-transparent text-text-primary hover:bg-primary-main hover:text-common-white',
-            isOpen &&
+          isOpen &&
             'bg-primary-main text-common-white shadow-s5 hover:bg-primary-main hover:text-common-white',
           isActive &&
             'bg-primary-light text-text-primary hover:bg-primary-main hover:text-common-white',
         )}
       >
-        <Typography variant="body1" className='text-base font-medium'>{navItem.faName}</Typography>
+        <Typography variant="body1" className="text-base font-medium">
+          {navItem.faName}
+        </Typography>
       </Button>
 
       {hasChildren && isOpen ? (

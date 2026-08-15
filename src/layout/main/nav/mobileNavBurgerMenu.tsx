@@ -102,6 +102,7 @@ export default function MobileNavBurgerMenu({ headerData }: { headerData: Header
                       isNavItemOpen ||isActive && 'bg-background-default',
                     )}
                   >
+                    {/* lvl 1  */}
                     <ListItemButton
                       component={navItem.path ? Link : 'div'}
                       href={navItem.path ? navItem.path : undefined}
@@ -112,6 +113,7 @@ export default function MobileNavBurgerMenu({ headerData }: { headerData: Header
                       <ListItemText primary={navItem.faName} />
                     </ListItemButton>
 
+                    
                     {hasChildren ? (
                       <ButtonBase
                         type="button"
@@ -172,7 +174,7 @@ export default function MobileNavBurgerMenu({ headerData }: { headerData: Header
                                       <ListItem
                                         key={subChild.id}
                                         disablePadding
-                                        className="bg-background-default"
+                                        className="bg-secondary-lighter"
                                       >
                                         <ListItemButton
                                           component={Link}

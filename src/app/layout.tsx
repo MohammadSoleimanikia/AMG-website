@@ -27,9 +27,9 @@ export default async function RootLayout({
     <html
       lang="fa"
       dir="rtl"
-      className={`h-screen w-full ${Yekan_Bakh.variable} ${Yekan_Bakh.className}`}
+      className={`${Yekan_Bakh.variable} ${Yekan_Bakh.className}`}
     >
-      <body id="__next">
+      <body id="__next" className="min-h-screen">
         <CacheProvider>
           <ThemeProvider>
             <Toaster
@@ -41,12 +41,17 @@ export default async function RootLayout({
                   background: '#343A40',
                   color: '#fff',
                 },
-                icon: '✅',
+                success: {
+                  icon: '✅',
+                },
+                error: {
+                  icon: '❌',
+                },
               }}
             />
             <UserProvider token={token}>
               <HomeHeader />
-              <main className="bg-background-default pt-[calc(76px+56px)] xl:pt-[calc(116px+60px)]">
+              <main className="min-h-screen bg-background-default pt-[calc(76px+56px)] xl:pt-[calc(116px+60px)]">
                 {children}
               </main>
               <Footer />

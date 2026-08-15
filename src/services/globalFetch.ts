@@ -13,7 +13,7 @@ export async function globalFetch<T>(
     });
     const data = await response.json();
 
-    // 401
+    //HTTP
     if (!response.ok) {
       return {
         message: data?.message || 'در دریافت اطلاعات مشکلی پیش آمده است.',
@@ -23,7 +23,7 @@ export async function globalFetch<T>(
         success: false,
       };
     }
-
+    // backend errors 401
     if (data.statusCode === 401) {
       return {
         message: data.message,
@@ -44,13 +44,15 @@ export async function globalFetch<T>(
       };
     }
 
-    return  {
+    // success case
+    return {
       data: data.data,
       statusCode: 200,
       errors: null,
       success: true,
       message: data.message,
     };
+    
   } catch (error) {
     return {
       data: null,

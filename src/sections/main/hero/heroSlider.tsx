@@ -55,7 +55,6 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
         }}
         onSlideChange={(swiper) => {
           setActive(swiper.realIndex);
-          console.log("active",active)
         }}
 
         onSwiper={(swiper) => {
@@ -128,7 +127,6 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
                   key={item.image}
                   onClick={() => {
                     mainSwiperRef.current?.slideToLoop(index);
-                    console.log("index",index)
                   }}
                 >
                   <Image className="!size-full [&_img]:object-cover" src={item.image} />

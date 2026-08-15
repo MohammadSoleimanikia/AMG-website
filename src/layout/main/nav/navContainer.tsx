@@ -26,7 +26,6 @@ export default function NavContainer({ navItem }: NavContainerProps) {
           {navItem.children.map((navChild) => {
             const isActive = activeCategory?.id === navChild.id;
 
-
             return (
               <Button
                 key={navChild.id}
@@ -46,7 +45,7 @@ export default function NavContainer({ navItem }: NavContainerProps) {
                 onMouseEnter={() => setActiveCategory(navChild)}
                 onFocus={() => setActiveCategory(navChild)}
                 className={clsx(
-                  'min-h-[64px] w-full justify-start gap-3  rounded-2xl px-4 py-3 text-right text-lg font-medium transition-all duration-200',
+                  'min-h-[64px] w-full justify-start gap-3 rounded-2xl px-4 py-3 text-right text-lg font-medium transition-all duration-200',
                   isActive
                     ? 'bg-primary-main text-common-white shadow-s5 hover:bg-primary-main hover:text-common-white'
                     : 'bg-transparent text-text-primary shadow-none hover:bg-primary-light hover:text-primary-main',
@@ -69,7 +68,7 @@ export default function NavContainer({ navItem }: NavContainerProps) {
                 </span>
 
                 {/* Text */}
-                <span className='line-clamp-1'>{navChild.faName}</span>
+                <span className="line-clamp-1">{navChild.faName}</span>
               </Button>
             );
           })}
@@ -98,14 +97,16 @@ export default function NavContainer({ navItem }: NavContainerProps) {
 
           {/* car Item */}
           {navItem.type === 'car' && (
-            <div className="flex flex-wrap w-full  gap-x-12 gap-y-6">
+            <div className="flex w-full flex-wrap gap-x-12 gap-y-6">
               {activeCategory?.children?.map((car) => (
                 <Link
                   key={car.id}
                   href={car.path}
                   color="inherit"
-                  className={clsx("group/car flex min-w-0 flex-col items-center gap-3 rounded-2xl bg-transparent",
-                    " text-text-primary transition-colors duration-200 hover:bg-transparent hover:text-primary-main")}
+                  className={clsx(
+                    'group/car flex min-w-0 flex-col items-center gap-3 rounded-2xl bg-transparent',
+                    'text-text-primary transition-colors duration-200 hover:bg-transparent hover:text-primary-main',
+                  )}
                 >
                   {/* Car icon */}
                   <span
