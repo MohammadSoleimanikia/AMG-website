@@ -45,8 +45,8 @@ const UserProvider = ({
 
   const logout = () => {
     deleteCookie('accessToken');
-    mutate(GET_USER);
     setUser(null)
+    mutate(GET_USER);
     router.replace(HOME_PATH);
   };
 
