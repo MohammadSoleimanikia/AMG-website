@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { User } from '@/_types/_user';
 import { useUser } from '@/providers/userProvider';
 import { Button, Popover, Typography } from '@mui/material';
@@ -10,7 +10,7 @@ type ProfileButtonProps = {
   className?: string;
 };
 export default function ProfileButton({ user, className = '' }: ProfileButtonProps) {
-  const {logout}=useUser()
+  const { logout } = useUser();
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -49,9 +49,13 @@ export default function ProfileButton({ user, className = '' }: ProfileButtonPro
           horizontal: 'left',
         }}
       >
-        <div className="flex w-full flex-col gap-4 p-6">
-          <Button onClick={logout} className='w-full hover:text-common-white' variant='text'>
-            خروج
+        <div className="flex h-[416px] w-[248px] flex-col gap-4 p-6">
+          <Button
+            onClick={logout}
+            className="text- w-full hover:bg-background-default"
+            variant="text"
+          >
+            <Typography variant="body1">خروج</Typography>
           </Button>
         </div>
       </Popover>

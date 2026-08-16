@@ -27,7 +27,6 @@ const UserProvider = ({
   children: ReactNode;
   token: string | undefined;
 }) => {
-  const { mutate } = useSWRConfig();
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
@@ -50,10 +49,6 @@ const UserProvider = ({
     setUser(() => null);
     deleteCookie('accessToken');
     setUser(null);
-    mutate(GET_USER, undefined, {
-      revalidate: false,
-    });
-
     router.replace(HOME_PATH);
   };
 

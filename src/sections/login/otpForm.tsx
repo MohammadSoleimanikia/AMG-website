@@ -72,8 +72,9 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
       await setCookie('accessToken', token, {
         expires: expDate,
       });
+      
       toast.success('ورود با موفقیت انجام شد');
-
+      mutate("GET_USER")
       // role based redirect
       const role = decoded.role;
       switch (role) {
