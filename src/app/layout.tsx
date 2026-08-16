@@ -16,6 +16,7 @@ import ThemeProvider from '@/theme';
 import { Toaster } from 'react-hot-toast';
 import UserProvider from '@/providers/userProvider';
 import { getCookie } from '@/services/cookie/getCookie';
+import { SWRConfig } from 'swr';
 
 export default async function RootLayout({
   children,
@@ -49,13 +50,20 @@ export default async function RootLayout({
                 },
               }}
             />
-            <UserProvider token={token}>
-              <HomeHeader />
-              <main className="min-h-screen bg-background-default pt-[calc(76px+56px)] xl:pt-[calc(116px+60px)]">
-                {children}
-              </main>
-              <Footer />
-            </UserProvider>
+            <SWRConfig value={{
+              errorRetryCount:3,
+              revalidateOnFocus:false
+
+            }}>
+              <UserProvider token={token}>
+                <HomeHeader />
+                
+                <main className="min-h-screen bg-background-default pt-[calc(76px+60px)] xl:pt-[calc(116px+65px)]">
+                  {children}
+                </main>
+                <Footer />
+              </UserProvider>
+            </SWRConfig>
           </ThemeProvider>
         </CacheProvider>
       </body>

@@ -9,7 +9,7 @@ import { ButtonBase, Skeleton } from '@mui/material';
 import { TfiAngleLeft, TfiAngleRight } from 'react-icons/tfi';
 import type { HomeType } from '@/_types/_home';
 import { useRef, useState } from 'react';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 import useIsMounted from '@/hooks/useIsMounted';
 import Link from 'next/link';
 
@@ -39,7 +39,7 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
     swiper.slideNext();
   };
   return (
-    <div className={clsx("relative w-full")}>
+    <div className={clsx('relative w-full')}>
       {/* Main Hero Swiper */}
       <Swiper
         className="relative h-[200px] overflow-hidden rounded-[20px] sm:h-[250px] md:h-[300px] lg:h-[450px] lg:rounded-[40px]"
@@ -69,7 +69,7 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
                 src={image.image}
                 alt={`تصویر اسلاید ${image.id}`}
                 className={clsx(
-                  '!size-full [&_img]:h-full [&_img]:w-full [&_img]:object-cover ',
+                  '!size-full [&_img]:h-full [&_img]:w-full [&_img]:object-cover',
                   '[&_img]:object-center',
                 )}
               />
@@ -121,8 +121,10 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
               images.map((item, index) => (
                 <div
                   className={clsx(
-                    'size-14 overflow-hidden rounded-full  transition-all duration-300',
-                    active === index ? 'border-4 box-border border-solid border-custom-1':'border-4 border-solid border-transparent',
+                    'size-14 overflow-hidden rounded-full transition-all duration-300',
+                    active === index
+                      ? 'box-border border-4 border-solid border-custom-1'
+                      : 'border-4 border-solid border-transparent',
                   )}
                   key={item.image}
                   onClick={() => {
@@ -145,16 +147,16 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
       {/* next and prev buttons */}
       <div
         dir="ltr"
-        className="absolute  bottom-5 left-5 z-20 flex items-center gap-2 md:bottom-6 md:left-6"
+        className="absolute bottom-5 left-5 z-20 flex items-center gap-2 md:bottom-6 md:left-6"
       >
         <ButtonBase
           type="button"
           disabled={images.length <= 1}
           onClick={handleNextSlide}
           className={clsx(
-            'flex size-7 sm:size-8 items-center justify-center rounded-full',
+            'flex size-7 items-center justify-center rounded-full sm:size-8',
             'bg-common-white text-text-primary transition-colors duration-200',
-            'hover:bg-common-black hover:text-common-white ',
+            'hover:bg-common-black hover:text-common-white',
           )}
         >
           <TfiAngleLeft className="size-3 sm:size-5" />
@@ -165,9 +167,9 @@ export default function HeroSlider({ images }: { images: HomeType.BannerType[] }
           disabled={images.length <= 1}
           onClick={handlePreviousSlide}
           className={clsx(
-            'flex size-7 sm:size-8 items-center justify-center rounded-full',
+            'flex size-7 items-center justify-center rounded-full sm:size-8',
             'bg-common-white text-text-primary transition-colors duration-200',
-            'hover:bg-common-black hover:text-common-white ',
+            'hover:bg-common-black hover:text-common-white',
           )}
         >
           <TfiAngleRight className="size-3 sm:size-5" />

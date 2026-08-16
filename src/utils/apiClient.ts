@@ -64,7 +64,7 @@ apiClient.interceptors.response.use(
 
       if (status === 422) {
         toast.error(
-          data?.message || 'این شماره از قبل در سیستم موجود میباشد',
+          data?.message || 'مشکلی پیش آمده است',
         );
       }
 

@@ -3,11 +3,10 @@ import Image from '@/components/image';
 import { PRODUCTS } from '@/path';
 import { TOP_MARGIN } from '@/utils/layout';
 import { Grid } from '@mui/material';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 import Link from 'next/link';
 
-
-export default function HeroGrid({ images }:{images:HomeType.GroupParent[]} ) {
+export default function HeroGrid({ images }: { images: HomeType.GroupParent[] }) {
   return (
     <Grid
       container

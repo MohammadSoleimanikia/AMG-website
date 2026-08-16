@@ -1,6 +1,6 @@
 'use client';
 import { OTPInput } from 'input-otp';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 import OtpTimer from './otpTimer';
 import FormProvider from '@/components/RHF/formProvider';
 import { Controller, useForm } from 'react-hook-form';
@@ -9,26 +9,28 @@ import { OtpRequest, otpSchema } from '@/validation/otpSchema';
 import { Button, ButtonBase, FormHelperText, Typography } from '@mui/material';
 import useSWRMutation from 'swr/mutation';
 import { OTP } from '@/services';
-import { swrMutationFetcher } from '@/services/mutationFetcher';
+import { swrMutationFetcher } from '@/utils/mutationFetcher';
 import { FaArrowLeftLong } from 'react-icons/fa6';
-import { useUser } from '@/providers/userProvider';
 import { setCookie } from '@/services/cookie/setCookie';
-import { redirect } from 'next/navigation';
 import { OtpResponse } from '@/_types/_login';
 import toast from 'react-hot-toast';
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { Dispatch, SetStateAction } from 'react';
-
+import { useRouter } from 'next/navigation';
+import { FINANCIAL_PATH, HOME_PATH, SALE_PATH, WAREHOUSE_PATH } from '@/path';
+import { UserRole } from '@/middleware';
 type OtpFormProps = {
   phone: string;
   origin: 'login' | 'signUp';
-  setActiveStep: Dispatch<
-    SetStateAction<'login' | 'signUp' | 'otp'>
-  >;
+  setActiveStep: Dispatch<SetStateAction<'login' | 'signUp' | 'otp'>>;
 };
-export default function OtpForm({ setActiveStep, phone,origin }: OtpFormProps) {
-  const { setUser } = useUser();
-  const { trigger, isMutating } = useSWRMutation(OTP, swrMutationFetcher<OtpResponse , OtpRequest>);
+export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) {
+  const router = useRouter();
+
+  const { trigger, isMutating } = useSWRMutation(
+    OTP,
+    swrMutationFetcher< OtpRequest,OtpResponse>,
+  );
 
   const methods = useForm<OtpRequest>({
     defaultValues: { code: '', phone: phone },
@@ -36,42 +38,65 @@ export default function OtpForm({ setActiveStep, phone,origin }: OtpFormProps) {
     resolver: yupResolver(otpSchema),
   });
 
-const submitHandler = async (data: OtpRequest) => {
-  try {
-    const response = await trigger({
-      code: data.code,
-      phone,
-    });
+  const submitHandler = async (data: OtpRequest) => {
+    try {
+      const response = await trigger({
+        code: data.code,
+        phone,
+      });
 
-    if (!response.success || !response.data?.token) {
-      toast.error('اعتبارسنجی با خطا مواجه شد!');
-      return;
+      if (!response.success || !response.data?.token) {
+        toast.error('اعتبارسنجی با خطا مواجه شد!');
+        return;
+      }
+
+      const token = response.data.token;
+
+      const decoded = jwtDecode<JwtPayload & { role: UserRole }>(token);
+
+      if (!decoded.exp) {
+        toast.error('توکن معتبر نیست!');
+        return;
+      }
+      const expDate = new Date(decoded.exp * 1000);
+
+      setCookie('accessToken', token, {
+        expires: expDate,
+      });
+
+      toast.success('ورود با موفقیت انجام شد');
+
+      // role based redirect
+      const role = decoded.role;
+
+      switch (role) {
+        case 'user':
+          router.replace(HOME_PATH);
+          break;
+        case 'admin_super':
+          router.replace(HOME_PATH);
+          break;
+
+        case 'expert_financial':
+          router.replace(FINANCIAL_PATH);
+          break;
+
+        case 'expert_sale':
+          router.replace(SALE_PATH);
+          break;
+
+        case 'expert_warehouse':
+          router.replace(WAREHOUSE_PATH);
+          break;
+
+        default:
+          router.replace(HOME_PATH);
+          break;
+      }
+    } catch (error) {
+      console.log('OTP verification error:', error);
     }
-
-    const token = response.data.token;
-
-    const decoded = jwtDecode<{ exp?: number }>(token);
-
-    if (!decoded.exp) {
-      toast.error('توکن معتبر نیست!');
-      return;
-    }
-
-    const expDate = new Date(decoded.exp * 1000);
-
-    setUser(response.data.user);
-
-    setCookie('accessToken', token, {
-      expires: expDate,
-    });
-
-    toast.success('ورود با موفقیت انجام شد');
-
-    redirect('/');
-  } catch (error) {
-    console.log('OTP verification error:', error);
-  }
-};
+  };
   return (
     <div className="mx-2 w-full max-w-[400px] rounded-3xl bg-background-paper p-6 shadow-s18">
       {/* head section of form */}
@@ -151,14 +176,15 @@ const submitHandler = async (data: OtpRequest) => {
             )}
           />
           {methods.formState?.errors?.code && (
-            <FormHelperText className='text-error-main mt-4'>{methods.formState.errors.code.message}</FormHelperText>
+            <FormHelperText className="mt-4 text-error-main">
+              {methods.formState.errors.code.message}
+            </FormHelperText>
           )}
           <ButtonBase
             className={clsx(
               'mt-6 w-full rounded-md bg-primary-lighter p-4',
               'font-medium text-primary-main',
               'hover:bg-primary-light',
-              isMutating && 'cursor-not-allowed opacity-50',
             )}
             type="submit"
             disabled={isMutating}

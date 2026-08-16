@@ -1,7 +1,7 @@
 'use client';
 import React, { useRef } from 'react';
 import { Card, Typography } from '@mui/material';
-import { clsx } from 'clsx';
+import { clsx } from 'clsx/lite';
 import { type Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
@@ -137,7 +137,7 @@ export default function BestOffer({ type = 'primary', discountData }: BestOfferP
             <Swiper
               className="!m-0 !w-full min-w-0"
               modules={[Navigation]}
-              loop={discountData.products.length>5}
+              loop={discountData.products.length > 5}
               slidesPerView={2}
               spaceBetween={20}
               speed={200}

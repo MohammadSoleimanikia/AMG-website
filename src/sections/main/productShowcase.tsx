@@ -5,7 +5,7 @@ import { useRef } from 'react';
 import type { Swiper as SwiperType } from 'swiper';
 import ProductShowcaseInfoCard from './productShowcase/productShowcaseInfoCard';
 import ProductShowcaseSlider from './productShowcase/productShowcaseSlider';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 import { HomeType } from '@/_types/_home';
 
 export default function ProductShowcase({

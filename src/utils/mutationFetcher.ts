@@ -1,7 +1,7 @@
 import type { BaseResponse } from '@/_types/_bsResponse';
 import { apiClient } from '@/utils/apiClient';
 
-export const swrMutationFetcher = async <TResponse, TRequest>(
+export const swrMutationFetcher = async <TRequest, TResponse>(
   url: string,
   { arg }: { arg: TRequest },
 ): Promise<BaseResponse<TResponse>> => {

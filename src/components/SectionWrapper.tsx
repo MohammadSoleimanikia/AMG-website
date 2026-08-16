@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 import { Container } from '@mui/material';
 import { TOP_PADDING } from '@/utils/layout';
 

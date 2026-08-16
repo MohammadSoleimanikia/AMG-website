@@ -6,7 +6,7 @@ import useSWR from 'swr';
 
 import { GET_USER } from '@/services';
 import { GetUserResponse, User } from '@/_types/_user';
-import { getFetcher } from '@/services/getFetcher';
+import { getFetcher } from '@/utils/getFetcher';
 import { BaseResponse } from '@/_types/_bsResponse';
 
 type UserContextType = {

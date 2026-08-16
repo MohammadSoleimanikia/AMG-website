@@ -1,6 +1,6 @@
 import { useUser } from '@/providers/userProvider';
 import { ButtonBase, Skeleton, Typography } from '@mui/material';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 import Link from 'next/link';
 import { FaUser } from 'react-icons/fa6';
 
@@ -22,15 +22,17 @@ export default function TopSideBarSectionMobile() {
           <Skeleton variant="text" className="h-[50px] w-[150px]" />
         </span>
       ) : (
-        <Typography variant="body1" className='mb-3 text-common-white'>سلام {user.name}</Typography>
+        <Typography variant="body1" className="mb-3 text-common-white">
+          سلام {user.name}
+        </Typography>
       )}
 
       <ButtonBase
         LinkComponent={Link}
         href="/login"
-        className="mb-4 h-12 p-3 !rounded-lg bg-common-white text-center font-yekan_bakh font-medium"
+        className="mb-4 h-12 !rounded-lg bg-common-white p-3 text-center font-yekan_bakh font-medium"
       >
-        {isLoading || !user ? "ورود و عضویت" : "پروفایل" }
+        {isLoading || !user ? 'ورود و عضویت' : 'پروفایل'}
       </ButtonBase>
     </div>
   );

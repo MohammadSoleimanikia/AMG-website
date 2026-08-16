@@ -1,7 +1,7 @@
 'use client';
 import React, { useRef } from 'react';
 import { Card, Typography } from '@mui/material';
-import { clsx } from 'clsx';
+import { clsx } from 'clsx/lite';
 import { type Swiper as SwiperType } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';

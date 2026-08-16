@@ -1,6 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import Link from 'next/link';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 
 type GeneralErrorProps = {
   title?: string;

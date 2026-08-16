@@ -10,7 +10,7 @@ import { ButtonBase, FormHelperText, InputAdornment } from '@mui/material';
 
 import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 import { yupResolver } from '@hookform/resolvers/yup';
 import useSWRMutation from 'swr/mutation';
 
@@ -19,9 +19,8 @@ import FormProvider from '@/components/RHF/formProvider';
 
 import { SignUpFormType, signUpSchema } from '@/validation/signUpSchema';
 import { REGISTER } from '@/services';
-import { swrMutationFetcher } from '@/services/mutationFetcher';
+import { swrMutationFetcher } from '@/utils/mutationFetcher';
 import RHFPhone from '@/components/RHF/RHFPhoneInput';
-import { BaseResponse } from '@/_types/_bsResponse';
 import { RegisterResponse } from '@/_types/_login';
 import toast from 'react-hot-toast';
 import { AuthStep, OtpOrigin } from '.';
@@ -43,7 +42,7 @@ export default function SignUpForm({
 }: SignUpProps) {
   const { trigger, isMutating } = useSWRMutation(
     REGISTER,
-    swrMutationFetcher<RegisterResponse, SignUpFormType>,
+    swrMutationFetcher< SignUpFormType,RegisterResponse>,
   );
 
   const methods = useForm<SignUpFormType>({
@@ -204,7 +203,6 @@ export default function SignUpForm({
               'w-full rounded-md bg-primary-lighter p-4',
               'font-medium text-primary-main',
               'hover:bg-primary-light',
-              isMutating && 'cursor-not-allowed opacity-50',
             )}
             type="submit"
             disabled={isMutating}

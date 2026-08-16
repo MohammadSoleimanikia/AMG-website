@@ -3,7 +3,7 @@
 import type { NavBarItem } from '@/_types/_header';
 import NavContainer from '@/layout/main/nav/navContainer';
 import { Button, Typography } from '@mui/material';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 import Link from 'next/link';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';

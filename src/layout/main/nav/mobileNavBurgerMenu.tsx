@@ -10,7 +10,7 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
-import clsx from 'clsx';
+import clsx from 'clsx/lite';
 
 import { FaRegCircle } from 'react-icons/fa';
 import { IoMenuOutline } from 'react-icons/io5';
@@ -99,7 +99,7 @@ export default function MobileNavBurgerMenu({ headerData }: { headerData: Header
                     disablePadding
                     className={clsx(
                       'flex w-full items-stretch',
-                      isNavItemOpen ||isActive && 'bg-background-default',
+                      isNavItemOpen || (isActive && 'bg-background-default'),
                     )}
                   >
                     {/* lvl 1  */}
@@ -113,7 +113,6 @@ export default function MobileNavBurgerMenu({ headerData }: { headerData: Header
                       <ListItemText primary={navItem.faName} />
                     </ListItemButton>
 
-                    
                     {hasChildren ? (
                       <ButtonBase
                         type="button"
