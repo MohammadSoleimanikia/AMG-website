@@ -1,10 +1,17 @@
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { NextRequest, NextResponse } from 'next/server';
-import { FINANCIAL_PATH, HOME_PATH, LOGIN_PATH, PROFILE_PATH, SALE_PATH, WAREHOUSE_PATH } from './path';
+import {
+  ADMIN_PATH,
+  FINANCIAL_PATH,
+  HOME_PATH,
+  LOGIN_PATH,
+  PROFILE_PATH,
+  SALE_PATH,
+  WAREHOUSE_PATH,
+} from './path';
 
 export type UserRole =
   'user' | 'admin_super' | 'expert_financial' | 'expert_sale' | 'expert_warehouse';
-
 
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('accessToken');
@@ -29,6 +36,13 @@ export function middleware(request: NextRequest) {
       >(token.value);
       const { role } = decoded;
 
+      // admin
+      if (
+        pathname.startsWith(ADMIN_PATH) &&
+        role !== 'admin_super'
+      ) {
+        return NextResponse.redirect(new URL(HOME_PATH, request.url));
+      }
 
       // Sale
       if (
