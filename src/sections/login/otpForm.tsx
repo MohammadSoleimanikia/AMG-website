@@ -74,6 +74,7 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
 
       switch (role) {
         case 'user':
+          console.log('reRoute')
           router.replace(PROFILE_PATH);
           break;
         case 'admin_super':

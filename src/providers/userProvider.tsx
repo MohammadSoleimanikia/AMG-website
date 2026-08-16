@@ -39,6 +39,7 @@ const UserProvider = ({
   useEffect(() => {
     if (data?.data?.user) {
       setUser(data.data.user);
+      console.log('effect')
     }
   }, [data]);
 
