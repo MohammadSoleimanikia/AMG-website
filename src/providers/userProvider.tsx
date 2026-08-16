@@ -1,18 +1,21 @@
 'use client';
 
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-
-import useSWR from 'swr';
+import { useRouter } from 'next/navigation';
+import useSWR, { useSWRConfig } from 'swr';
 
 import { GET_USER } from '@/services';
 import { GetUserResponse, User } from '@/_types/_user';
 import { getFetcher } from '@/utils/getFetcher';
 import { BaseResponse } from '@/_types/_bsResponse';
+import { deleteCookie } from '@/services/cookie/deleteCookie';
+import { HOME_PATH } from '@/path';
 
 type UserContextType = {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
   isLoading: boolean;
+  logout: () => void;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -24,6 +27,8 @@ const UserProvider = ({
   children: ReactNode;
   token: string | undefined;
 }) => {
+  const { mutate } = useSWRConfig();
+  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
 
   const { data, isLoading } = useSWR<BaseResponse<GetUserResponse>>(
@@ -37,12 +42,21 @@ const UserProvider = ({
     }
   }, [data]);
 
+
+  const logout = () => {
+    deleteCookie('accessToken');
+    mutate(GET_USER);
+    setUser(null)
+    router.replace(HOME_PATH);
+  };
+
   return (
     <UserContext.Provider
       value={{
         user,
         setUser,
         isLoading,
+        logout,
       }}
     >
       {children}

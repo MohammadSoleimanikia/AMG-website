@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { OtpRequest, otpSchema } from '@/validation/otpSchema';
 import { Button, ButtonBase, FormHelperText, Typography } from '@mui/material';
 import useSWRMutation from 'swr/mutation';
-import { OTP } from '@/services';
+import { GET_USER, OTP } from '@/services';
 import { swrMutationFetcher } from '@/utils/mutationFetcher';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { setCookie } from '@/services/cookie/setCookie';
@@ -19,6 +19,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 import { FINANCIAL_PATH, HOME_PATH, SALE_PATH, WAREHOUSE_PATH } from '@/path';
 import { UserRole } from '@/middleware';
+import { useSWRConfig } from 'swr';
 type OtpFormProps = {
   phone: string;
   origin: 'login' | 'signUp';
@@ -26,10 +27,10 @@ type OtpFormProps = {
 };
 export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) {
   const router = useRouter();
-
+  const { mutate } = useSWRConfig();
   const { trigger, isMutating } = useSWRMutation(
     OTP,
-    swrMutationFetcher< OtpRequest,OtpResponse>,
+    swrMutationFetcher<OtpRequest, OtpResponse>,
   );
 
   const methods = useForm<OtpRequest>({
@@ -46,6 +47,7 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
       });
 
       if (!response.success || !response.data?.token) {
+        // throw error
         toast.error('اعتبارسنجی با خطا مواجه شد!');
         return;
       }
@@ -63,7 +65,8 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
       setCookie('accessToken', token, {
         expires: expDate,
       });
-
+      // revalidate 
+      await mutate(GET_USER);
       toast.success('ورود با موفقیت انجام شد');
 
       // role based redirect
