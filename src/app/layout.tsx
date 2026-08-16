@@ -24,6 +24,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const token = await getCookie('accessToken');
+  
   return (
     <html
       lang="fa"
@@ -53,11 +54,10 @@ export default async function RootLayout({
             <SWRConfig value={{
               errorRetryCount:3,
               revalidateOnFocus:false
-
             }}>
               <UserProvider token={token}>
                 <HomeHeader />
-                
+
                 <main className="min-h-screen bg-background-default pt-[calc(76px+60px)] xl:pt-[calc(116px+65px)]">
                   {children}
                 </main>

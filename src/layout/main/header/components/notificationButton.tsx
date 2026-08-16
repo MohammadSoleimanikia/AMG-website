@@ -1,4 +1,4 @@
-import { Badge, IconButton, Popover, Typography } from '@mui/material';
+import { Badge, IconButton, Popover} from '@mui/material';
 import { useState } from 'react';
 import { GoBell } from 'react-icons/go';
 
