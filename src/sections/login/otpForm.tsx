@@ -17,7 +17,7 @@ import toast from 'react-hot-toast';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
-import { FINANCIAL_PATH, HOME_PATH, SALE_PATH, WAREHOUSE_PATH } from '@/path';
+import { FINANCIAL_PATH, HOME_PATH, PROFILE_PATH, SALE_PATH, WAREHOUSE_PATH } from '@/path';
 import { UserRole } from '@/middleware';
 import { useSWRConfig } from 'swr';
 type OtpFormProps = {
@@ -62,11 +62,11 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
       }
       const expDate = new Date(decoded.exp * 1000);
 
+      // revalidate 
+      await mutate(GET_USER);
       setCookie('accessToken', token, {
         expires: expDate,
       });
-      // revalidate 
-      await mutate(GET_USER);
       toast.success('ورود با موفقیت انجام شد');
 
       // role based redirect
@@ -74,7 +74,7 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
 
       switch (role) {
         case 'user':
-          router.replace(HOME_PATH);
+          router.replace(PROFILE_PATH);
           break;
         case 'admin_super':
           router.replace(HOME_PATH);
@@ -90,10 +90,6 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
 
         case 'expert_warehouse':
           router.replace(WAREHOUSE_PATH);
-          break;
-
-        default:
-          router.replace(HOME_PATH);
           break;
       }
     } catch (error) {
