@@ -17,7 +17,13 @@ import toast from 'react-hot-toast';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
-import { FINANCIAL_PATH, HOME_PATH, PROFILE_PATH, SALE_PATH, WAREHOUSE_PATH } from '@/path';
+import {
+  FINANCIAL_PATH,
+  HOME_PATH,
+  PROFILE_PATH,
+  SALE_PATH,
+  WAREHOUSE_PATH,
+} from '@/path';
 import { UserRole } from '@/middleware';
 import { useSWRConfig } from 'swr';
 type OtpFormProps = {
@@ -62,35 +68,32 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
       }
       const expDate = new Date(decoded.exp * 1000);
 
-      // revalidate 
-      await mutate(GET_USER);
-      setCookie('accessToken', token, {
+      // should await cause make bug
+      await setCookie('accessToken', token, {
         expires: expDate,
       });
       toast.success('ورود با موفقیت انجام شد');
 
       // role based redirect
       const role = decoded.role;
-
       switch (role) {
         case 'user':
-          console.log('reRoute')
-          router.replace(PROFILE_PATH);
+          router.push(HOME_PATH);
           break;
         case 'admin_super':
-          router.replace(HOME_PATH);
+          router.push(HOME_PATH);
           break;
 
         case 'expert_financial':
-          router.replace(FINANCIAL_PATH);
+          router.push(FINANCIAL_PATH);
           break;
 
         case 'expert_sale':
-          router.replace(SALE_PATH);
+          router.push(SALE_PATH);
           break;
 
         case 'expert_warehouse':
-          router.replace(WAREHOUSE_PATH);
+          router.push(WAREHOUSE_PATH);
           break;
       }
     } catch (error) {

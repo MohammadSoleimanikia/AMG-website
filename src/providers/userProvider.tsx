@@ -34,20 +34,26 @@ const UserProvider = ({
   const { data, isLoading } = useSWR<BaseResponse<GetUserResponse>>(
     token ? GET_USER : null,
     getFetcher<GetUserResponse>,
+    {},
   );
+  console.log('SWRDATA', data?.data);
 
   useEffect(() => {
     if (data?.data?.user) {
       setUser(data.data.user);
-      console.log('effect')
+      console.log('useEffect set user data useState');
     }
   }, [data]);
 
-
   const logout = () => {
     deleteCookie('accessToken');
-    setUser(null)
-    mutate(GET_USER);
+    setUser(() => null);
+    deleteCookie('accessToken');
+    setUser(null);
+    mutate(GET_USER, undefined, {
+      revalidate: false,
+    });
+
     router.replace(HOME_PATH);
   };
 
