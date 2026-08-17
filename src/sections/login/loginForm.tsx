@@ -60,6 +60,7 @@ export default function LoginForm({
         setActiveStep('otp');
       }
     } catch (error) {
+      // errors handled in apiClient
       console.log('Login error:', error);
     }
   };

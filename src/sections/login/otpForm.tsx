@@ -54,8 +54,7 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
 
       if (!response.success || !response.data?.token) {
         // throw error
-        toast.error('اعتبارسنجی با خطا مواجه شد!');
-        return;
+        throw new Error(response.message || 'اعتبارسنجی با خطا مواجه شد!');
       }
 
       const token = response.data.token;
@@ -63,8 +62,7 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
       const decoded = jwtDecode<JwtPayload & { role: UserRole }>(token);
 
       if (!decoded.exp) {
-        toast.error('توکن معتبر نیست!');
-        return;
+        throw new Error('توکن معتبر نیست!');
       }
       const expDate = new Date(decoded.exp * 1000);
 
@@ -72,9 +70,8 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
       await setCookie('accessToken', token, {
         expires: expDate,
       });
-      
       toast.success('ورود با موفقیت انجام شد');
-      mutate("GET_USER")
+      mutate('GET_USER');
       // role based redirect
       const role = decoded.role;
       switch (role) {
@@ -98,7 +95,11 @@ export default function OtpForm({ setActiveStep, phone, origin }: OtpFormProps) 
           break;
       }
     } catch (error) {
-      console.log('OTP verification error:', error);
+     if (error instanceof Error) {
+    toast.error(error.message);
+  } else {
+    toast.error('خطایی رخ داده است.');
+  }
     }
   };
   return (

@@ -35,7 +35,6 @@ const UserProvider = ({
     getFetcher<GetUserResponse>,
     {},
   );
-  console.log('SWRDATA', data?.data);
 
   useEffect(() => {
     if (data?.data?.user) {

@@ -21,13 +21,11 @@ export function middleware(request: NextRequest) {
 
   // Logged-in user shouldn't access login
   if (token && pathname === LOGIN_PATH) {
-    console.log('REDIRECT: logged user trying to access login');
     return NextResponse.redirect(new URL(HOME_PATH, request.url));
   }
 
   // Profile and all its children require authentication
   if (!token && pathname.startsWith(PROFILE_PATH)) {
-    console.log('REDIRECT: no token accessing profile');
     return NextResponse.redirect(new URL(HOME_PATH, request.url));
   }
 
