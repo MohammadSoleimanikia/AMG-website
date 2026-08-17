@@ -2,6 +2,7 @@
 import { User } from '@/_types/_user';
 import { useUser } from '@/providers/userProvider';
 import { Button, Popover, Typography } from '@mui/material';
+import Link from 'next/link';
 import React, { useState } from 'react';
 import { FaRegUser } from 'react-icons/fa';
 
@@ -56,6 +57,14 @@ export default function ProfileButton({ user, className = '' }: ProfileButtonPro
             variant="text"
           >
             <Typography variant="body1">خروج</Typography>
+          </Button>
+          <Button
+            LinkComponent={Link}
+            href="/profile"
+            className="text- w-full hover:bg-background-default"
+            variant="text"
+          >
+            <Typography variant="body1">پروفایل</Typography>
           </Button>
         </div>
       </Popover>
